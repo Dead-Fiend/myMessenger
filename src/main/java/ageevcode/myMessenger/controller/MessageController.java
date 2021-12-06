@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,11 +31,14 @@ public class MessageController {
 
     @PostMapping
     public Message create(@RequestBody Message message) {
+        message.setCreatedAt(LocalDateTime.now());
+        message.setUpdatedAt(LocalDateTime.now());
         return messageRepo.save(message);
     }
 
     @PutMapping("{id}")
     public Message update(@PathVariable("id") Message messageFromDB, @RequestBody Message message) {
+        message.setUpdatedAt(LocalDateTime.now());
         BeanUtils.copyProperties(message, messageFromDB, "id");
         return messageRepo.save(messageFromDB);
     }
