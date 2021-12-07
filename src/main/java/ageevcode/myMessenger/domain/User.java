@@ -1,11 +1,14 @@
 package ageevcode.myMessenger.domain;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Usr")
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
