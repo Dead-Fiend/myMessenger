@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("message")
 public class MessageController {
     private final MessageRepo messageRepo;
 
@@ -20,30 +19,40 @@ public class MessageController {
     }
 
     @GetMapping
+    public String mainPage() {
+        return "Welcome!";
+    }
+
+    @GetMapping("message")
     public List<Message> list() {
         return messageRepo.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("message/{id}")
     public Message getOne(@PathVariable("id") Message message) {
         return message;
     }
 
-    @PostMapping
+    @GetMapping("admin")
+    public String admin() {
+        return "Admin";
+    }
+
+    @PostMapping("message")
     public Message create(@RequestBody Message message) {
         message.setCreatedAt(LocalDateTime.now());
         message.setUpdatedAt(LocalDateTime.now());
         return messageRepo.save(message);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("message/{id}")
     public Message update(@PathVariable("id") Message messageFromDB, @RequestBody Message message) {
         message.setUpdatedAt(LocalDateTime.now());
         BeanUtils.copyProperties(message, messageFromDB, "id");
         return messageRepo.save(messageFromDB);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("message/{id}")
     public void delete(@PathVariable("id") Message message) {
         messageRepo.delete(message);
     }

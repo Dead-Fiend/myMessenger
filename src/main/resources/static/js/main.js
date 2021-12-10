@@ -8,6 +8,9 @@ const getIndex = (list, id) => {
     return -1;
 }
 
+
+
+
 const messageApi = Vue.resource('/message{/id}')
 
 Vue.component('message-form', {
