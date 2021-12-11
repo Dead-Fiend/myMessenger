@@ -2,15 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <!--  production version, optimized for size and speed -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
-    <script th:inline="javascript">
-        var frontendData = [[${frontendData}]];
-    </script>
-    <title>InKontakte</title>
+    <title>InKontakte-Profile</title>
 </head>
 <body>
 <header>
@@ -29,13 +21,10 @@
         </a>
     </div>
 </header>
-<div style="position: relative">
-    <div>Добро пожаловать,&nbsp;</div>
-    <div id="app"></div>
-</div>
+Profile)
 
-
-
-<script src="/js/main.js"></script>
+<div th:text="${frontendData.profile.username}"></div>
+<div th:text="${frontendData.profile.authorities[0]}"></div>
+<div th:text="${frontendData.profile.username}"></div>
 </body>
 </html>

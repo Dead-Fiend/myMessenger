@@ -105,10 +105,10 @@ Vue.component('messages-list', {
 var app = new Vue({
     el: '#app',
     template:
-        '<div>' +
-            '<div v-if="!profile">Необходимо <a href="/login">Войти</a></div>' +
+        '<div style="position: absolute; top: 0%;">' +
+            '<div v-if="!profile" style="transform: translate(0, 150%)">Необходимо <a href="/login">Войти</a> или <a href="/registration">Зарегестрироваться</a></div>' +
             '<div v-else>' +
-                '<div>{{profile.username}} &nbsp;<a href="/logout">Выйти</a></div>' +
+                '<div style="transform: translate(45%, 0)">{{profile.username}}</div>' +
                 '<messages-list :messages="messages" />' +
             '</div>' +
         '</div>',
