@@ -96,15 +96,6 @@ Vue.component('messages-list', {
         '<message-form :messages="messages" :messageAttr="message"/>' +
         '<message-row v-for="message in messages" :key="message.id" :message="message" :messages="messages" :editMethod="editMethod" />' +
         '</div> ', // v-for= "element IN massive"
-    created: function () {
-        messageApi.get().then(result =>
-        result.json().then( data =>
-            data.forEach(message =>
-                this.messages.push(message)
-            )
-        )
-        )
-    },
     methods: {
         editMethod: function (message) {
             this.message = message;
@@ -113,8 +104,25 @@ Vue.component('messages-list', {
 })
 var app = new Vue({
     el: '#app',
-    template: '<messages-list :messages="messages" />',
+    template:
+        '<div>' +
+            '<div v-if="!profile">Необходимо <a href="/login">Войти</a></div>' +
+            '<div v-else>' +
+                '<div>{{profile.username}} &nbsp;<a href="/logout">Выйти</a></div>' +
+                '<messages-list :messages="messages" />' +
+            '</div>' +
+        '</div>',
     data: {
-        messages: []
-    }
+        messages: frontendData.messages,
+        profile: frontendData.profile
+    },
+    created: function () {
+/*        messageApi.get().then(result =>
+            result.json().then( data =>
+                data.forEach(message =>
+                    this.messages.push(message)
+                )
+            )
+        )*/
+    },
 })
