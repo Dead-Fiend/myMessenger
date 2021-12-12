@@ -5,6 +5,7 @@ import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +32,9 @@ public class htmlController {
         this.userRepo = userRepo;
     }
 
+    @Value("${spring.profiles.active}")
+    private String isDevMode;
+
     @GetMapping
     public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         HashMap<Object, Object> data = new HashMap<>();
@@ -44,6 +48,7 @@ public class htmlController {
         }
 
         model.addAttribute("frontendData", data);
+        model.addAttribute("isDevMode", "dev".equals(isDevMode));
 
         return "index";
     }
@@ -71,7 +76,7 @@ public class htmlController {
     }
 
     @GetMapping("profile")
-    public String profile(Model model, @AuthenticationPrincipal User user, @AuthenticationPrincipal UserDetails userDetails) {
+    public String profile(Model model) {
         HashMap<Object, Object> data = new HashMap<>();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

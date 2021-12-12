@@ -22,9 +22,21 @@
     </div>
 </header>
 
-
-<span th:text="${frontendData.profile.username}"></span><span>'s Profile)</span>
-<div th:text="${frontendData.profile.authorities[0]}"></div>
-<div th:text="${frontendData.tst}"></div>
+<h3>Профиль</h3>
+<span>Здравствуйте,</span>
+<i>
+    <span th:text="${frontendData.profile.username}"></span>
+</i>
+<div></div>
+<span>Ваш уровень доступа:</span>
+<i>
+    <span th:text="${frontendData.profile.authorities[0]}"></span>
+</i>
+<div></div>
+<span>Ваш аккаунт:</span>
+<i>
+    <span th:if="${frontendData.profile.enabled}">Включён</span>
+    <span th:if="${!frontendData.profile.enabled}">Выключён</span>
+</i>
 </body>
 </html>

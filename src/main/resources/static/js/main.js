@@ -1,3 +1,14 @@
+import Vue from "vue";
+import App from "pages/App.vue";
+
+new Vue({
+    el: '#app',
+    render: a => a(App)
+})
+
+
+
+/*
 const getIndex = (list, id) => {
     for (let i = 0; i < list.length; i++) {
         if (list[i].id === id) {
@@ -101,28 +112,4 @@ Vue.component('messages-list', {
             this.message = message;
         }
     }
-})
-var app = new Vue({
-    el: '#app',
-    template:
-        '<div style="position: absolute; top: 0%;">' +
-            '<div v-if="!profile" style="transform: translate(0, 150%)">Необходимо <a href="/login">Войти</a> или <a href="/registration">Зарегестрироваться</a></div>' +
-            '<div v-else>' +
-                '<div style="transform: translate(45%, 0)">{{profile.username}}</div>' +
-                '<messages-list :messages="messages" />' +
-            '</div>' +
-        '</div>',
-    data: {
-        messages: frontendData.messages,
-        profile: frontendData.profile
-    },
-    created: function () {
-/*        messageApi.get().then(result =>
-            result.json().then( data =>
-                data.forEach(message =>
-                    this.messages.push(message)
-                )
-            )
-        )*/
-    },
-})
+})*/
