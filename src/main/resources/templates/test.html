@@ -2,6 +2,10 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script th:inline="javascript">
+        var frontendData = [[${frontendData}]];
+        ;
+    </script>
     <title>Title</title>
 </head>
 <body>

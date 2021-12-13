@@ -2,6 +2,9 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script th:inline="javascript">
+        var frontendData = [[${frontendData}]];
+    </script>
     <title>InKontakte-Profile</title>
 </head>
 <body>
@@ -21,22 +24,9 @@
         </a>
     </div>
 </header>
-
 <h3>Профиль</h3>
 <span>Здравствуйте,</span>
-<i>
-    <span th:text="${frontendData.profile.username}"></span>
-</i>
-<div></div>
-<span>Ваш уровень доступа:</span>
-<i>
-    <span th:text="${frontendData.profile.authorities[0]}"></span>
-</i>
-<div></div>
-<span>Ваш аккаунт:</span>
-<i>
-    <span th:if="${frontendData.profile.enabled}">Включён</span>
-    <span th:if="${!frontendData.profile.enabled}">Выключён</span>
-</i>
+<span id="profile"></span>
+<script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>
 </body>
 </html>

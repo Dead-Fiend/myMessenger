@@ -55,7 +55,7 @@ public class UserDetails {
     }
 
     public void setActive(Boolean active) {
-        this.active = active;
+        this.active = true;
     }
 
     public Set<Role> getRoles() {

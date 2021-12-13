@@ -24,9 +24,9 @@
         </a>
     </div>
 </header>
-<div style="position: relative">
-    <div th:if="${frontendData.profile}">Добро пожаловать,&nbsp;</div>
-    <div th:else>Добро пожаловать</div>
+<div th:switch="${frontendData.profile}" style="position: relative">
+    <div th:case="null">Добро пожаловать</div>
+    <div th:case="*">Добро пожаловать,&nbsp;</div>
     <div id="app"></div>
 </div>
 <script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>

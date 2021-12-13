@@ -8,16 +8,22 @@
         </div>
         <div v-else>
             <div style="transform: translate(45%, 0)">{{profile.username}}</div>
-            <!-- <messages-list :messages="messages" /> -->
+            <messages-list :messages="messages" />
         </div>
     </div>
 </template>
 
 <script>
+    import MessagesList from 'components/messages/MessagesList.vue'
     export default {
-        data: {
-            messages: frontendData.messages,
-            profile: frontendData.profile
+        components: {
+            MessagesList
+        },
+        data: function () {
+            return{
+                messages: frontendData.messages,
+                profile: frontendData.profile
+            }
         },
     }
 </script>
