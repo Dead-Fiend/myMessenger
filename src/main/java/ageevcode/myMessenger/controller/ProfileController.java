@@ -20,7 +20,9 @@ public class ProfileController {
 
     @GetMapping("{id}")
     public UserDetails getOne(@PathVariable("id") UserDetails userDetails) {
-        return userDetails;
+        UserDetails userDetailsWithoutPasswd = userDetails;
+        userDetailsWithoutPasswd.setPassword(null);
+        return userDetailsWithoutPasswd;
     }
 
     @PutMapping("{id}")

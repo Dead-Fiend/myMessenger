@@ -4,6 +4,7 @@ import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.UserDetails;
 import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserRepo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,18 +92,22 @@ public class htmlController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object principal = auth.getPrincipal();
+
         //ArrayList<Object> userProfile = new ArrayList<>();
         //userProfile.add(principal);
-        Object test = userRepo.findByUsername(auth.getName());
+        //Object test = userRepo.findByUsername(auth.getName());
         //long userId = userDetails.getId();
-
         //Object test = principal;
         //Object test = userDetails.getLastVisit();
         //userProfile.add(test);
-        if (test != null) {
+
+        userRepo.findByUsername(auth.getName()).setPassword(null);
+        Object profile = userRepo.findByUsername(auth.getName());
+
+        if (profile != null) {
             //data.put("profile", test);
             //data.put("profile", principal);
-            data.put("profile", test);
+            data.put("profile", profile);
             //data.put("userId", userProfile);
         } else {
             data.put("profile", null);
