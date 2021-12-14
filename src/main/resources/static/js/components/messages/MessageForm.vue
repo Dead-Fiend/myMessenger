@@ -6,25 +6,25 @@
 </template>
 
 <script>
-    import {sendMessage} from "util/ws";
+    import { sendMessage } from "util/ws";
 
 
     export default {
         props: ['messages', 'messageAttr'],
-        data: function () {
+        data() {
             return {
                 text: '',
                 id: ''
             }
         },
         watch: {
-            messageAttr: function(newVal) {
+            messageAttr(newVal) {
                 this.text = newVal.text
                 this.id = newVal.id
             }
         },
         methods: {
-            save: function () {
+            save() {
                 sendMessage({id: this.id, text: this.text})
                 this.text = ''
                 this.id = ''

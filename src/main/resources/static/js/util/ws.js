@@ -1,21 +1,19 @@
+
 import SockJS from 'sockjs-client'
-import {Stomp} from "@stomp/stompjs";
+import { Stomp } from '@stomp/stompjs'
+
 
 var stompClient = null
 const handlers = []
 
 export function connect() {
-    //const socket = new SockJS('/gs-guide-websocket')
-    var url = "ws://localhost:15674/ws"
-    var socket = Stomp.client(url)
-    stompClient = Stomp.over(() => {
-        return socket;
-    })
+    const socket = new SockJS('/gs-guide-websocket')
+    stompClient = Stomp.over(socket)
     stompClient.reconnect_delay = 5000
     stompClient.connect({}, frame => {
-        console.log('Connected' + frame)
+        console.log('Connected: ' + frame)
         stompClient.subscribe('/topic/activity', message => {
-            handlers.forEach(handler => JSON.parse(message.body))
+            handlers.forEach(handler => handler(JSON.parse(message.body)))
         })
     })
 }
@@ -28,9 +26,9 @@ export function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect()
     }
-    console.log('Disconnected')
+    console.log("Disconnected")
 }
 
 export function sendMessage(message) {
-    stompClient.send('/app/changeMessage', {}, JSON.stringify(message))
+    stompClient.send("/app/changeMessage", {}, JSON.stringify(message))
 }

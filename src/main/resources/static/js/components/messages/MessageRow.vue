@@ -12,10 +12,10 @@
     export default {
         props: ['message', 'editMessage', 'deleteMessage', 'messages'],
         methods: {
-            edit: function () {
+            edit() {
                 this.editMessage(this.message)
             },
-            del: function () {
+            del() {
                 this.deleteMessage(this.message)
             }
         }

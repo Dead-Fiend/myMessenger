@@ -15,22 +15,22 @@
     import MessageForm from 'components/messages/MessageForm.vue'
     export default {
         props: ['messages'],
-        data: function () {
+        components: {
+            MessageRow, MessageForm
+        },
+        data() {
             return {
                 message: null
             }
         },
-        components: {
-            MessageRow, MessageForm
-        },
         methods: {
-            editMessage: function (message) {
-                this.message = message;
+            editMessage(message) {
+                this.message = message
             },
-            deleteMessage: function (message) {
+            deleteMessage(message) {
                 this.$resource('/message{/id}').remove({id: message.id}).then(result => {
                     if (result.ok) {
-                        this.messages.splice(this.messages.indexOf(this.message), 1)
+                        this.messages.splice(this.messages.indexOf(message), 1)
                     }
                 })
             }
