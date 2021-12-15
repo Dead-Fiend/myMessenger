@@ -26,8 +26,10 @@
         methods: {
             save() {
                 sendMessage({id: this.id, text: this.text})
+                console.log({id: this.id, text: this.text})
                 this.text = ''
                 this.id = ''
+
 /*                const message = {text: this.text}
 
                 if (this.id) {

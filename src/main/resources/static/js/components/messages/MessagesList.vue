@@ -13,6 +13,9 @@
 <script>
     import MessageRow from 'components/messages/MessageRow.vue'
     import MessageForm from 'components/messages/MessageForm.vue'
+    import { removeMessage } from "../../util/ws";
+    import { getIndex } from "../../util/collections";
+
     export default {
         props: ['messages'],
         components: {
@@ -28,11 +31,17 @@
                 this.message = message
             },
             deleteMessage(message) {
-                this.$resource('/message{/id}').remove({id: message.id}).then(result => {
+
+
+                removeMessage(message)
+                this.messages.splice(this.messages.indexOf(message), 1)
+                console.log(this.messages)
+                /*this.$resource('/message{/id}').remove({id: message.id}).then(result => {
                     if (result.ok) {
                         this.messages.splice(this.messages.indexOf(message), 1)
                     }
-                })
+                })*/
+
             }
         }
     }

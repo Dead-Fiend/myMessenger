@@ -53,6 +53,13 @@ public class MessageController {
     @MessageMapping("/changeMessage")
     @SendTo("/topic/activity")
     public Message change(Message message) {
-        return messageRepo.save(message);
+        message.setUpdatedAt(LocalDateTime.now()); return messageRepo.save(message);
     }
+
+    @MessageMapping("/removeMessage")
+    @SendTo("/topic/activity")
+    public void remove(Message message) {
+        messageRepo.delete(message);
+    }
+
 }

@@ -9,9 +9,8 @@ const handlers = []
 export function connect() {
     const socket = new SockJS('/gs-guide-websocket')
     stompClient = Stomp.over(socket)
-    stompClient.reconnect_delay = 5000
+    stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        console.log('Connected: ' + frame)
         stompClient.subscribe('/topic/activity', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
         })
@@ -31,4 +30,8 @@ export function disconnect() {
 
 export function sendMessage(message) {
     stompClient.send("/app/changeMessage", {}, JSON.stringify(message))
+}
+
+export function removeMessage(message) {
+    stompClient.send("/app/removeMessage", {}, JSON.stringify(message))
 }

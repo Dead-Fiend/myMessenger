@@ -1,5 +1,5 @@
 <template>
-    <div style="position: absolute; top: 0%;">
+    <div class="main-app" style="position: absolute; top: 0%;">
         <div v-if="!profile" style="transform: translate(0, 150%)">
             Необходимо
             <a href="/login">Войти</a>
@@ -16,7 +16,7 @@
 <script>
     import MessagesList from 'components/messages/MessagesList.vue'
     import { addHandler } from "util/ws";
-    import { getIndex } from "../util/collections";
+    import { getIndex } from "util/collections";
 
     export default {
         components: {
@@ -31,6 +31,7 @@
         created() {
             addHandler(data => {
                 let index = getIndex(this.messages, data.id)
+                console.log(data.id)
                 if (index > -1) {
                     this.messages.splice(index, 1, data)
                 } else {
