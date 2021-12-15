@@ -2,9 +2,10 @@ package ageevcode.myMessenger.controller;
 
 import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.UserDetails;
+import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserRepo;
-import org.springframework.beans.BeanUtils;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,7 @@ public class htmlController {
     private String isDevMode;
 
     @GetMapping
+    @JsonView(Views.WithoutPassword.class)
     public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         HashMap<Object, Object> data = new HashMap<>();
         Object test = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -45,13 +47,13 @@ public class htmlController {
             data.put("profile", null);
             data.put("messages", null);
         }
-
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(isDevMode));
 
         return "index";
     }
     @GetMapping("login")
+    @JsonView(Views.WithoutPassword.class)
     public String login() {
         return "login";
     }
@@ -68,6 +70,7 @@ public class htmlController {
         return "redirect:/";
     }
     @GetMapping("registration")
+    @JsonView(Views.WithoutPassword.class)
     public String registration() {
         return "registration";
     }
@@ -87,11 +90,12 @@ public class htmlController {
     }
 
     @GetMapping("profile")
+    @JsonView(Views.WithoutPassword.class)
     public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         HashMap<Object, Object> data = new HashMap<>();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
+        //Object principal = auth.getPrincipal();
 
         //ArrayList<Object> userProfile = new ArrayList<>();
         //userProfile.add(principal);
@@ -100,6 +104,7 @@ public class htmlController {
         //Object test = principal;
         //Object test = userDetails.getLastVisit();
         //userProfile.add(test);
+
 
         userRepo.findByUsername(auth.getName()).setPassword(null);
         Object profile = userRepo.findByUsername(auth.getName());
@@ -119,21 +124,15 @@ public class htmlController {
         return "profile";
     }
 
-    @GetMapping("test")
-    public String test(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        HashMap<Object, Object> data = new HashMap<>();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object test = userRepo.findByUsername(auth.getName());
-        if (test != null) {
-            data.put("profile", test);
-            data.put("messages", messageRepo.findAll());
-        } else {
-            data.put("profile", null);
-            data.put("messages", null);
-        }
-
-        model.addAttribute("frontendData", data);
+    @GetMapping("about")
+    @JsonView(Views.WithoutPassword.class)
+    public String test(Model model) {
         model.addAttribute("isDevMode", "dev".equals(isDevMode));
-        return "test";
+        return "about";
+    }
+    @GetMapping("admin")
+    public String admin() {
+        //Role.ADMIN.name()
+        return "admin";
     }
 }

@@ -1,58 +1,59 @@
 <template>
     <div>
-        <input type="text" placeholder="Write something" v-model="text" />
-        <input type="button" value="Save" @click="save" />
+        <v-layout row v-if="isRedact">
+            <v-text-field label="Редактировать сообщение" placeholder="Напишите что-нибудь" v-model="text" />
+            <v-btn class="ma-2" @click="save">Отправить</v-btn>
+        </v-layout>
+        <v-layout row v-if="!isRedact">
+            <v-text-field label="Новое сообщение" placeholder="Напишите что-нибудь" v-model="text" />
+            <v-btn class="ma-2" @click="save">Отправить</v-btn>
+        </v-layout>
     </div>
 </template>
 
 <script>
-    import { sendMessage } from "util/ws";
-
+    import { mapActions } from "vuex";
 
     export default {
-        props: ['messages', 'messageAttr'],
+        props: ['messageAttr'],
         data() {
             return {
                 text: '',
-                id: ''
+                id: '',
+                isRedact: null
             }
+
         },
         watch: {
             messageAttr(newVal) {
                 this.text = newVal.text
                 this.id = newVal.id
-            }
+                this.isRedact = newVal
+            },
+
         },
         methods: {
+            ...mapActions(['addMessageAction', 'updateMessageAction']),
             save() {
-                sendMessage({id: this.id, text: this.text})
-                console.log({id: this.id, text: this.text})
-                this.text = ''
-                this.id = ''
-
-/*                const message = {text: this.text}
+                const message = {
+                    id: this.id,
+                    text: this.text
+                }
 
                 if (this.id) {
-                    this.$resource('/message{/id}').update({id: this.id}, message).then(result =>
-                        result.json().then(data => {
-                                const index = getIndex(this.messages, data.id)
-                                this.messages.splice(index, 1, data)
-                                this.text = ''
-                                this.id = ''
-                            }
-                        )
-                    )
+                    this.updateMessageAction(message)
                 } else {
-                    this.$resource('/message{/id}').save({}, message).then(result =>
-                        result.json().then(data => {
-                                this.messages.push(data)
-                                this.text = ''
-                            }
-                        )
-                    )
-                }*/
+                    this.addMessageAction(message)
 
+
+                }
+                //
+                this.text = ''
+                this.id = ''
+                this.isRedact = null
             }
+
+
         }
 
     }

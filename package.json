@@ -9,12 +9,14 @@
   "author": "Dead-Fiend <83966220+Dead-Fiend@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@stomp/stompjs": "^6.1.2",
     "sockjs-client": "^1.5.2",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
     "vue-resource": "^1.5.3",
-    "vuetify": "^2.6.1"
+    "vuetify": "^2.6.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

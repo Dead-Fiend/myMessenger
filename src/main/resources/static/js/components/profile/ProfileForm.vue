@@ -6,15 +6,6 @@
 </template>
 
 <script>
-    const getIndex = (list, id) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].id === id) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
     export default {
         props: ['profile', 'active', 'roles', 'id', 'username'],
         data: function () {

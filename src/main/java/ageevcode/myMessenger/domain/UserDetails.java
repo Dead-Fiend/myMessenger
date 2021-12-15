@@ -1,28 +1,39 @@
 package ageevcode.myMessenger.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "usr")
-public class UserDetails {
+public class UserDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.WithoutPassword.class)
     private Long id;
+    @JsonView(Views.WithoutPassword.class)
     private String username;
+    @JsonView(Views.FullProfile.class)
     private String password;
+    @JsonView(Views.WithoutPassword.class)
     private Boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
+    @JsonView(Views.WithoutPassword.class)
     private Set<Role> roles;
 
+    @JsonView(Views.WithoutPassword.class)
     private LocalDateTime lastVisit;
     @Column(updatable = false)
+    @JsonView(Views.WithoutPassword.class)
     private LocalDateTime createdAt;
+    @JsonView(Views.WithoutPassword.class)
     private LocalDateTime updatedAt;
 
 
