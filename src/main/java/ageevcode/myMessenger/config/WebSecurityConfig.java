@@ -40,15 +40,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/registration**", "/js/**", "/error**").permitAll()
+                .antMatchers("/", "/reg**", "/auth**", "/registration**", "/js/**", "/error**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/auth")
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll()
+                .logout().logoutSuccessUrl("/auth").permitAll()
                 .and()
                 .csrf().disable();
     }

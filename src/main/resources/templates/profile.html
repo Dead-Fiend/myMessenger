@@ -1,32 +1,19 @@
+<!--
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <script th:inline="javascript">
         var frontendData = [[${frontendData}]];
+        var redact = {isRedact: null};
     </script>
     <title>InKontakte-Profile</title>
 </head>
 <body>
-<header>
-    <div style="position: relative">
-        <a href="/">
-            <span style="font-size: 20pt">
-                InKontakte
-            </span>
 
-            <a th:if="${frontendData.profile}" href="/profile" style="position: absolute; right: 10%; top: 50%; transform: translate( 0, -50%)">
-                Профиль
-            </a>
-            <a th:if="${frontendData.profile}" href="/logout" style="position: absolute; right: 1%; top: 50%; transform: translate( 0, -50%)">
-                Выйти
-            </a>
-        </a>
-    </div>
-</header>
 <h3>Профиль</h3>
-<span>Здравствуйте,</span>
+
 <span id="profile"></span>
 <script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>
 </body>
-</html>
+</html>-->

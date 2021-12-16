@@ -8,7 +8,6 @@ import ageevcode.myMessenger.repo.UserRepo;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,7 @@ import java.util.Map;
 public class htmlController {
     private final MessageRepo messageRepo;
     private final UserRepo userRepo;
+
     @Autowired
     public htmlController(MessageRepo messageRepo, UserRepo userRepo) {
         this.messageRepo = messageRepo;
@@ -52,24 +52,36 @@ public class htmlController {
 
         return "index";
     }
-    @GetMapping("login")
+ /*   @GetMapping("login")
     @JsonView(Views.WithoutPassword.class)
     public String login() {
         return "login";
     }
-    @PostMapping String loginUser(UserDetails userDetails, Map<String, Object> model) {
+    @PostMapping("login") String loginUser(UserDetails userDetails, Map<String, Object> model) {
         UserDetails userDetailsFromDB = userRepo.findByUsernameAndPassword(userDetails.getUsername(), userDetails.getPassword());
 
         if (userDetailsFromDB == null) {
             model.put("message", "Неправильный логин или пароль");
             return "login";
         }
-
-
-
         return "redirect:/";
+    }*/
+    /*@GetMapping("auth")
+    public String auth() {
+        return "index";
     }
+    @PostMapping("auth")
+    public String authUser(UserDetails userDetails, Map<String, Object> model) {
+        UserDetails userDetailsFromDB = userRepo.findByUsernameAndPassword(userDetails.getUsername(), userDetails.getPassword());
+
+        if (userDetailsFromDB == null) {
+            model.put("message", "Неправильный логин или пароль");
+            return "redirect:/auth";
+        }
+        return "redirect:/";
+    }*/
     @GetMapping("registration")
+
     @JsonView(Views.WithoutPassword.class)
     public String registration() {
         return "registration";
@@ -80,15 +92,17 @@ public class htmlController {
 
         if (userDetailsFromDB != null) {
             model.put("message", "User exists!");
-            return "registration";
+            return "redirect:/reg";
         }
 
         userDetails.setActive(true);
         userDetails.setRoles(Collections.singleton(Role.USER));
         userRepo.save(userDetails);
-        return "redirect:/login";
+        //loginUser(userRepo.findByUsername(userDetails.getUsername()), model);
+        return "redirect:/auth";
     }
 
+/*
     @GetMapping("profile")
     @JsonView(Views.WithoutPassword.class)
     public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -123,6 +137,7 @@ public class htmlController {
 
         return "profile";
     }
+*/
 
     @GetMapping("about")
     @JsonView(Views.WithoutPassword.class)

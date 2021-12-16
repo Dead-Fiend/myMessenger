@@ -1,3 +1,4 @@
+/*
 import Vue from "vue";
 import VueResource from 'vue-resource';
 import App from "pages/Profile.vue";
@@ -11,3 +12,4 @@ new Vue({
     render: a => a(App),
     vuetify: new Vuetify({})
 })
+*/

@@ -14,53 +14,32 @@
                 </a>
             </span>
             <v-btn icon href="/profile">
-
                 <v-icon>account_circle</v-icon>
             </v-btn>
             <v-btn icon href="/logout">
                 <v-icon>logout</v-icon>
             </v-btn>
             </span>
-            <v-btn icon href="/login" v-if="!profile">
+            <v-btn icon href="/auth" v-if="!profile">
                 <v-icon>login</v-icon>
             </v-btn>
         </v-app-bar>
-
         <v-main class="mt-4">
-            <div v-if="!profile">
-                <v-container>
-                    Добро пожаловать
-                </v-container>
-                <v-container>
-                    Необходимо
-                    <a href="/login">Войти</a>
-                    или
-                    <a href="/registration">Зарегестрироваться</a>
-                </v-container>
-
-            </div>
-            <div v-if="profile">
-                <v-container>
-                    <div>Привет, {{profile.username}}</div>
-                </v-container>
-                <v-container>
-                    <messages-list :redact="redact"/>
-                </v-container>
-            </div>
+            <router-view></router-view>
         </v-main>
     </v-app>
+    <!--Необходимо
+<a href="/auth">Войти</a>
+или
+<a href="/reg">Зарегестрироваться</a>-->
+
 </template>
 
 <script>
-    import MessagesList from 'components/messages/MessagesList.vue'
     import { addHandler } from "util/ws";
     import { mapState, mapMutations } from 'vuex'
 
-
     export default {
-        components: {
-            MessagesList
-        },
         computed: mapState(['profile', 'messages', 'redact']),
         methods: mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
         created() {

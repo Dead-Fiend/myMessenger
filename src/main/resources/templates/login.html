@@ -6,12 +6,13 @@
 </head>
 <body>
 
-<header><div style="position: relative"><a href="/" style="font-size: 20pt">InKontakte</a></div></header>
+<script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>
+<!--<header><div style="position: relative"><a href="/" style="font-size: 20pt">InKontakte</a></div></header>
 <form action="/login" method="post">
     <div><label> User Name <input type="text" name="username"/></label></div>
     <div><label> Password <input type="password" name="password"/></label></div>
     <div><input type="submit" value="Sign In" name="button"/></div>
 </form>
-Нет аккаунта?<a href="/registration">Зарегистрируйся</a>
+Нет аккаунта?<a href="/registration">Зарегистрируйся</a>-->
 </body>
 </html>
