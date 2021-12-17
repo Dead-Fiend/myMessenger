@@ -1,11 +1,11 @@
 <template>
     <div>
         <v-layout row v-if="isRedact">
-            <v-text-field label="Редактировать сообщение" placeholder="Напишите что-нибудь" v-model="text" />
+            <v-text-field label="Редактировать сообщение" placeholder="Напишите что-нибудь" v-model="text" @keyup.enter="save" />
             <v-btn class="ma-2" @click="save">Отправить</v-btn>
         </v-layout>
         <v-layout row v-if="!isRedact">
-            <v-text-field label="Новое сообщение" placeholder="Напишите что-нибудь" v-model="text" />
+            <v-text-field label="Новое сообщение" placeholder="Напишите что-нибудь" v-model="text" @keyup.enter="save" />
             <v-btn class="ma-2" @click="save">Отправить</v-btn>
         </v-layout>
     </div>
@@ -15,7 +15,7 @@
     import { mapActions } from "vuex";
 
     export default {
-        props: ['messageAttr'],
+        props: ['messageAttr', 'redact'],
         data() {
             return {
                 text: '',
@@ -28,7 +28,7 @@
             messageAttr(newVal) {
                 this.text = newVal.text
                 this.id = newVal.id
-                this.isRedact = newVal
+                this.isRedact = true
             },
 
         },

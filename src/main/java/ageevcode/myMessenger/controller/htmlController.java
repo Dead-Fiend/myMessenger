@@ -6,6 +6,9 @@ import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserRepo;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,11 +28,15 @@ import java.util.Map;
 public class htmlController {
     private final MessageRepo messageRepo;
     private final UserRepo userRepo;
+    private final ObjectWriter writer;
 
     @Autowired
-    public htmlController(MessageRepo messageRepo, UserRepo userRepo) {
+    public htmlController(MessageRepo messageRepo, UserRepo userRepo, ObjectMapper mapper) {
         this.messageRepo = messageRepo;
         this.userRepo = userRepo;
+        writer = mapper
+                .setConfig(mapper.getSerializationConfig())
+                .writerWithView(Views.FullMessage.class);
     }
 
     @Value("${spring.profiles.active}")
@@ -37,12 +44,12 @@ public class htmlController {
 
     @GetMapping
     @JsonView(Views.WithoutPassword.class)
-    public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
         Object test = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (test != "anonymousUser") {
             data.put("profile", test);
-            data.put("messages", messageRepo.findAll());
+            model.addAttribute("messages", writer.writeValueAsString(messageRepo.findAll()));
         } else {
             data.put("profile", null);
             data.put("messages", null);

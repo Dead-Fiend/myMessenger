@@ -8,7 +8,8 @@
             <message-row v-for="message in sortedMessages"
                          :key="message.id"
                          :message="message"
-                         :editMessage="editMessage"/>
+                         :editMessage="editMessage"
+                         :redact="redact"/>
         </v-layout>
     </v-container>
 
@@ -27,11 +28,10 @@
             return {
                 message: null,
                 isRedact: null,
-                redact: {}
             }
         },
         computed: {
-            ...mapState(['profile']),
+            ...mapState(['profile', 'redact']),
             ...mapGetters(['sortedMessages'])
         },
             //mapGetters(['sortedMessages']), mapState(['profile'])

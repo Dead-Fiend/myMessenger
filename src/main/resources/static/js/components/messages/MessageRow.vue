@@ -33,19 +33,23 @@
                 <v-icon>close</v-icon>
             </v-btn>
         </v-card-actions>
+        <comment-list :comments="message.comments" :messageId="message.id"></comment-list>
     </v-card>
 </template>
 
 <script>
     import { mapActions } from 'vuex'
+    import CommentList from '../comment/CommentList.vue'
 
     export default {
-        props: ['message', 'editMessage'],
+        components: {
+            CommentList
+        },
+        props: ['message', 'editMessage', 'redact'],
         methods: {
             ...mapActions(['removeMessageAction']),
             edit() {
                 this.editMessage(this.message)
-
             },
             del() {
                 this.removeMessageAction(this.message)

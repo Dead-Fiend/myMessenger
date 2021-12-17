@@ -1,0 +1,28 @@
+<template>
+    <v-list two-line>
+        <v-subheader>Комментарии</v-subheader>
+
+        <template v-for="(item, index) in comments">
+            <v-divider v-if="index > 0" :key="index"></v-divider>
+            <comment-item :comment="item" :key="'item' + index"></comment-item>
+        </template>
+        <comment-form :messageId="messageId"></comment-form>
+    </v-list>
+</template>
+
+<script>
+    import CommentItem from './CommentItem.vue'
+    import CommentForm from './CommentForm.vue'
+    export default {
+        name: 'CommentList',
+        components: {
+            CommentItem,
+            CommentForm
+        },
+        props: ['comments', 'messageId']
+    }
+</script>
+
+<style>
+
+</style>

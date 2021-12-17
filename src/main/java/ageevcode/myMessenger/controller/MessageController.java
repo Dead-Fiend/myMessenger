@@ -1,13 +1,18 @@
 package ageevcode.myMessenger.controller;
 
 import ageevcode.myMessenger.domain.Message;
+import ageevcode.myMessenger.domain.UserDetails;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.dto.EventType;
 import ageevcode.myMessenger.dto.ObjectType;
 import ageevcode.myMessenger.repo.MessageRepo;
+import ageevcode.myMessenger.repo.UserRepo;
 import ageevcode.myMessenger.util.WsSender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -18,11 +23,13 @@ import java.util.function.BiConsumer;
 @RequestMapping("/message")
 public class MessageController {
     private final MessageRepo messageRepo;
+    private final UserRepo userRepo;
     private final BiConsumer<EventType, Message> wsSender;
 
     @Autowired
-    public MessageController(MessageRepo messageRepo, WsSender wsSender) {
+    public MessageController(MessageRepo messageRepo, UserRepo userRepo, WsSender wsSender) {
         this.messageRepo = messageRepo;
+        this.userRepo = userRepo;
         this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
     }
 
@@ -37,9 +44,15 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message create(@RequestBody Message message) {
+    public Message create(@RequestBody Message message, @AuthenticationPrincipal UserDetails userDetails) {
         message.setCreatedAt(LocalDateTime.now());
         message.setUpdatedAt(LocalDateTime.now());
+
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        message.setAuthor(userRepo.findByUsername(auth.getName()));
+
         Message updatedMessage = messageRepo.save(message);
 
         wsSender.accept(EventType.CREATE, message);
@@ -63,19 +76,4 @@ public class MessageController {
         messageRepo.delete(message);
         wsSender.accept(EventType.REMOVE, message);
     }
-
-    /*
-    @MessageMapping("/changeMessage")
-    @SendTo("/topic/activity")
-    public Message change(Message message) {
-        message.setUpdatedAt(LocalDateTime.now()); return messageRepo.save(message);
-    }*/
-
-    /*
-    @MessageMapping("/removeMessage")
-    @SendTo("/topic/activity")
-    public void remove(Message message) {
-        messageRepo.delete(message);
-    }*/
-
 }
