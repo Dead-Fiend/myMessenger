@@ -7,6 +7,7 @@
 
 <script>
     import {mapActions} from "vuex";
+    import comment from "../../api/comment";
 
     export default {
         name: 'CommentForm',
@@ -18,12 +19,12 @@
         },
         methods: {
             ...mapActions(['addCommentAction']),
-            async save() {
-                await this.addCommentAction({
+            save() {
+                this.addCommentAction({
                     text: this.text,
                     message: {
                         id: this.messageId
-                    }
+                    },
                 })
                 this.text = ''
             }

@@ -6,7 +6,7 @@
             <v-divider v-if="index > 0" :key="index"></v-divider>
             <comment-item :comment="item" :key="'item' + index"></comment-item>
         </template>
-        <comment-form :messageId="messageId"></comment-form>
+        <comment-form :message-id="messageId"></comment-form>
     </v-list>
 </template>
 
