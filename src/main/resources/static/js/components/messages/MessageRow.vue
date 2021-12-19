@@ -23,7 +23,22 @@
 <template>
     <v-card class="my-2">
         <v-card-text class="text--primary">
-            <i>({{ message.id }})</i> {{ message.text }}
+            <div>
+                <v-avatar color="indigo" size="36px">
+                    <v-icon>account_circle</v-icon>
+                </v-avatar>
+<!--                <v-avatar color="indigo" v-if="!(message.author && message.author.avatar)" size="36px">
+                    <v-icon>account_circle</v-icon>
+                </v-avatar>
+                <v-avatar v-if="message.author && message.author.avatar" size="36px">
+                    <img src="" alt="">
+                </v-avatar>-->
+                {{message.author.username}}
+            </div>
+            <div>
+                {{message.text}}
+            </div>
+
         </v-card-text>
         <v-card-actions>
             <v-btn icon @click="edit" small>

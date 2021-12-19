@@ -43,7 +43,6 @@ public class htmlController {
     private String isDevMode;
 
     @GetMapping
-    @JsonView(Views.WithoutPassword.class)
     public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
         Object test = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -88,8 +87,6 @@ public class htmlController {
         return "redirect:/";
     }*/
     @GetMapping("registration")
-
-    @JsonView(Views.WithoutPassword.class)
     public String registration() {
         return "registration";
     }
@@ -98,7 +95,7 @@ public class htmlController {
         UserDetails userDetailsFromDB = userRepo.findByUsername(userDetails.getUsername());
 
         if (userDetailsFromDB != null) {
-            model.put("message", "User exists!");
+            model.put("err", "User exists!");
             return "redirect:/reg";
         }
 
@@ -146,15 +143,15 @@ public class htmlController {
     }
 */
 
-    @GetMapping("about")
+/*    @GetMapping("about")
     @JsonView(Views.WithoutPassword.class)
     public String test(Model model) {
         model.addAttribute("isDevMode", "dev".equals(isDevMode));
         return "about";
-    }
-    @GetMapping("admin")
+    }*/
+/*    @GetMapping("admin")
     public String admin() {
         //Role.ADMIN.name()
         return "admin";
-    }
+    }*/
 }

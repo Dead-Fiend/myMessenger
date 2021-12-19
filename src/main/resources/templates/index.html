@@ -12,28 +12,7 @@
     </script>
 </head>
 <body>
-<!--<header>
-    <div style="position: relative">
-        <a href="/">
-            <span style="font-size: 20pt">
-                InKontakte
-            </span>
-
-            <a th:if="${frontendData.profile}" href="/profile" style="position: absolute; right: 10%; top: 50%; transform: translate( 0, -50%)">
-                Профиль
-            </a>
-            <a th:if="${frontendData.profile}" href="/logout" style="position: absolute; right: 1%; top: 50%; transform: translate( 0, -50%)">
-                Выйти
-            </a>
-        </a>
-    </div>
-</header>-->
 <div id="app"></div>
-<!--<div th:switch="${frontendData.profile}" style="position: relative">
-    <div th:case="null">Добро пожаловать</div>
-    <div th:case="*">Добро пожаловать,&nbsp;</div>
-    <div id="app"></div>
-</div>-->
 <script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>
 </body>
 </html>

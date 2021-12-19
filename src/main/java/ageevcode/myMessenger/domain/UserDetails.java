@@ -13,19 +13,18 @@ import java.util.Set;
 public class UserDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Views.WithoutPassword.class)
+    @JsonView(Views.Id.class)
     private Long id;
-    @JsonView(Views.WithoutPassword.class)
+    @JsonView(Views.IdName.class)
     private String username;
-    @JsonView(Views.FullProfile.class)
     private String password;
     @JsonView(Views.WithoutPassword.class)
     private Boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
     @JsonView(Views.WithoutPassword.class)
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
     @JsonView(Views.WithoutPassword.class)

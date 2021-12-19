@@ -40,20 +40,29 @@ export default new Vuex.Store({
             }
         },
         addCommentMutation(state, comment) {
-            const updateIndex = state.messages.findIndex(item => item.id === comment.message.id)
-            const message = state.messages[updateIndex]
+            const messageIndex = state.messages.findIndex(item => item.id === comment.message.id)
+            const message = state.messages[messageIndex]
+            console.log(messageIndex)
+            console.log(state.messages[messageIndex])
+            console.log(message.comments)
+            console.log((!message.comments) || (!message.comments.find(it => it.id === comment.id)))
+            if ((!message.comments) || (!message.comments.find(it => it.id === comment.id))) {
+                state.messages = [
+                    ...state.messages.slice(0, messageIndex),
+                    {
+                        ...message,
+                        comments: [
+                            ...message.comments,
+                            comment
+                        ]
+                    },
+                    ...state.messages.slice(messageIndex + 1)
+                ]
+            } else {
+                console.log('why')
+            }
 
-            state.messages = [
-                ...state.messages.slice(0, updateIndex),
-                {
-                    ...message,
-                    comments: [
-                        ...message.comments,
-                        comment
-                    ]
-                },
-                ...state.messages.slice(updateIndex + 1)
-            ]
+
         },
     },
     actions: {
@@ -81,8 +90,8 @@ export default new Vuex.Store({
         },
         async addCommentAction({commit, state}, comment) {
             const response = await commentApi.add(comment)
-            const data = await response.json
-            commit('addCommentMutation', comment)
+            const data = await response.json()
+            commit('addCommentMutation', data)
         }
     }
 })

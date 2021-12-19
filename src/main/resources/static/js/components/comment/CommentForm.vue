@@ -1,13 +1,14 @@
 <template>
+    <v-container>
         <v-layout row>
             <v-text-field label="Новый комментарий" placeholder="Напишите что-нибудь" v-model="text" @keyup.enter="save" />
             <v-btn class="ma-2" @click="save">Отправить</v-btn>
         </v-layout>
+    </v-container>
 </template>
 
 <script>
     import {mapActions} from "vuex";
-    import comment from "../../api/comment";
 
     export default {
         name: 'CommentForm',
@@ -15,6 +16,12 @@
         data() {
             return {
                 text: '',
+                messageId: null
+            }
+        },
+        watch: {
+            messageId(newVal) {
+                this.messageId = newVal
             }
         },
         methods: {

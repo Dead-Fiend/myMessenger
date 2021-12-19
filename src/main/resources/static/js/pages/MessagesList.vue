@@ -9,7 +9,7 @@
                          :key="message.id"
                          :message="message"
                          :editMessage="editMessage"
-                         :redact="redact"/>
+                         :redact="redact" />
         </v-layout>
     </v-container>
 

@@ -3,7 +3,7 @@
         <v-layout column justify-space-around>
             <v-flex></v-flex>
             <v-flex>
-                <v-layout raw justify-space-around>
+                <v-layout justify-space-around>
                     <v-flex></v-flex>
                     <v-flex fill-height>
                         <v-layout column justify-space-around>
