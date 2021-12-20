@@ -34,12 +34,10 @@
             ...mapState(['profile', 'redact']),
             ...mapGetters(['sortedMessages'])
         },
-            //mapGetters(['sortedMessages']), mapState(['profile'])
         methods: {
             editMessage(message) {
                 this.message = message
             },
-
         }
     }
 

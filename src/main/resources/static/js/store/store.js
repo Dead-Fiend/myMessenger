@@ -13,7 +13,7 @@ export default new Vuex.Store({
         redact: redact,
     },
     getters: {
-        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id))
+        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id)),
     },
     mutations: {
         addMessageMutation(state, message) {
@@ -42,10 +42,7 @@ export default new Vuex.Store({
         addCommentMutation(state, comment) {
             const messageIndex = state.messages.findIndex(item => item.id === comment.message.id)
             const message = state.messages[messageIndex]
-            console.log(messageIndex)
-            console.log(state.messages[messageIndex])
-            console.log(message.comments)
-            console.log((!message.comments) || (!message.comments.find(it => it.id === comment.id)))
+
             if ((!message.comments) || (!message.comments.find(it => it.id === comment.id))) {
                 state.messages = [
                     ...state.messages.slice(0, messageIndex),

@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+<!--    <v-container fill-height>
         <v-layout column justify-space-around>
             <v-flex></v-flex>
             <v-flex>
@@ -21,12 +21,47 @@
             </v-flex>
             <v-flex></v-flex>
         </v-layout>
+    </v-container>-->
+
+    <v-container column>
+        <v-flex class="title mb-3">
+            <div>Привет</div>
+        </v-flex>
+        <v-layout align-space-around justify-start column>
+            <user-row v-for="user in userList"
+                      :key="user.id"
+                      :user="user"
+                      :userList="userList"/>
+        </v-layout>
+        <div>
+            <v-btn icon @click="get" small>get</v-btn>
+        </div>
     </v-container>
 </template>
 
 <script>
+    import userRow from 'components/admin/userRow.vue'
+
     export default {
-        name: 'Admin'
+        name: 'Admin',
+        components: {
+            userRow
+        },
+        data() {
+            return {
+                user: null,
+                userList: null
+            }
+
+        },
+        methods: {
+            get() {
+                const adminApi = this.$resource('/adminAccess')
+                adminApi.get().then(response => {
+                    this.userList = response.body
+                })
+            }
+        }
     }
 </script>
 
