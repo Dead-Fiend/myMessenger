@@ -1,6 +1,5 @@
 package ageevcode.myMessenger.config;
 
-import ageevcode.myMessenger.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,5 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutSuccessUrl("/auth").permitAll()
                 .and()
                 .csrf().disable();
+
     }
 }
