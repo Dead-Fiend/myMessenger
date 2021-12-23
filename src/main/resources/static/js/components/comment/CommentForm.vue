@@ -1,8 +1,8 @@
 <template>
     <v-container>
-        <v-layout row>
+        <v-layout row class="px-3">
             <v-text-field label="Новый комментарий" placeholder="Напишите что-нибудь" v-model="text" @keyup.enter="save" />
-            <v-btn class="ma-2" @click="save">Отправить</v-btn>
+            <v-btn @click="save">Отправить</v-btn>
         </v-layout>
     </v-container>
 </template>
@@ -16,7 +16,6 @@
         data() {
             return {
                 text: '',
-                messageId: null
             }
         },
         watch: {

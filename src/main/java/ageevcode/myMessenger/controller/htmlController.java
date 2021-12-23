@@ -51,7 +51,7 @@ public class htmlController {
             model.addAttribute("messages", writer.writeValueAsString(messageRepo.findAll()));
         } else {
             data.put("profile", null);
-            data.put("messages", null);
+            data.put("messages", "[]");
         }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(isDevMode));

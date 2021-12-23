@@ -19,7 +19,7 @@
         data() {
             return {
                 text: '',
-                id: '',
+                id: null,
                 isRedact: null
             }
 
@@ -49,7 +49,7 @@
                 }
                 //
                 this.text = ''
-                this.id = ''
+                this.id = null
                 this.isRedact = null
             }
 

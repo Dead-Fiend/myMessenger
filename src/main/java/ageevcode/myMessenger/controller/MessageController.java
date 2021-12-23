@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -59,7 +60,8 @@ public class MessageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
         message.setAuthor(userRepo.findByUsername(auth.getName()));
-
+        List<Comment> list = new ArrayList<>();
+        message.setComments(list);
         Message updatedMessage = messageRepo.save(message);
 
         wsSender.accept(EventType.CREATE, message);

@@ -24,7 +24,7 @@
     <v-card class="my-2">
         <v-card-text class="text--primary">
             <div>
-                <v-avatar color="indigo" size="36px">
+                <v-avatar color="indigo" size="48px">
                     <v-icon>account_circle</v-icon>
                 </v-avatar>
 <!--                <v-avatar color="indigo" v-if="!(message.author && message.author.avatar)" size="36px">
@@ -33,11 +33,9 @@
                 <v-avatar v-if="message.author && message.author.avatar" size="36px">
                     <img src="" alt="">
                 </v-avatar>-->
-                {{message.author.username}}
+                <span class="pl-3">{{authorName}}</span>
             </div>
-            <div>
-                {{message.text}}
-            </div>
+            <div class="pt-3">{{message.text}}</div>
 
         </v-card-text>
         <v-card-actions>
@@ -59,6 +57,11 @@
     export default {
         components: {
             CommentList
+        },
+        computed: {
+            authorName() {
+                return this.message.author ? this.message.author.username : 'unknown'
+            }
         },
         props: ['message', 'editMessage', 'redact'],
         methods: {
