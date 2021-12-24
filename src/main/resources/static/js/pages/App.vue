@@ -9,11 +9,11 @@
             <v-spacer></v-spacer>
             <span v-if="profile">
             <span>
-                <a href="/profile" style="color: black; font-weight: 401">
+                <a href="/user" style="color: black; font-weight: 401">
                     {{profile.username}}
                 </a>
             </span>
-            <v-btn icon href="/profile">
+            <v-btn icon href="/user">
                 <v-icon>account_circle</v-icon>
             </v-btn>
             <v-btn icon href="/logout">

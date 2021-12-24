@@ -23,19 +23,22 @@
         </v-layout>
     </v-container>-->
 
-    <v-container column>
-        <v-flex class="title mb-3">
-            <div>Привет</div>
-        </v-flex>
-        <v-layout align-space-around justify-start column>
-            <user-row v-for="user in userList"
-                      :key="user.id"
-                      :user="user"
-                      :userList="userList"/>
-        </v-layout>
-        <div>
-            <v-btn icon @click="get" small>get</v-btn>
-        </div>
+  <v-container column>
+    <v-flex class="title mb-3">
+      <div>Привет</div>
+    </v-flex>
+    <v-layout>
+      <v-flex>
+        <v-btn @click="get">get user list</v-btn>
+      </v-flex>
+    </v-layout>
+    <v-layout align-space-around justify-start column>
+      <user-row v-for="user in userList"
+                :key="user.id"
+                :user="user"
+                :userList="userList"/>
+    </v-layout>
+
     </v-container>
 </template>
 

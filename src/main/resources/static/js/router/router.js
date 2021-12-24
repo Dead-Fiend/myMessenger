@@ -12,9 +12,9 @@ const routes = [
     {path: '/', component: MessagesList},
     {path: '/auth', component: Auth},
     {path: '/reg', component: Registration},
-    {path: '/profile', component: Profile},
+    {path: '/user/:id?', component: Profile},
     {path: '/admin', component: Admin},
-    {path: '/*', component: MessagesList},
+    {path: '*', component: MessagesList},
 ]
 
 export default new VueRouter({

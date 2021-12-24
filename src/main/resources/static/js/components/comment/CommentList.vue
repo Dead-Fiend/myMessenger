@@ -13,8 +13,8 @@
 </template>
 
 <script>
-    import CommentItem from './CommentItem.vue'
-    import CommentForm from './CommentForm.vue'
+    import CommentItem from 'components/comment/CommentItem.vue'
+    import CommentForm from 'components/comment/CommentForm.vue'
     export default {
         name: 'CommentList',
         components: {

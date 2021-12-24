@@ -23,18 +23,7 @@
 <template>
     <v-card class="my-2">
         <v-card-text class="text--primary">
-            <div>
-                <v-avatar color="indigo" size="48px">
-                    <v-icon>account_circle</v-icon>
-                </v-avatar>
-<!--                <v-avatar color="indigo" v-if="!(message.author && message.author.avatar)" size="36px">
-                    <v-icon>account_circle</v-icon>
-                </v-avatar>
-                <v-avatar v-if="message.author && message.author.avatar" size="36px">
-                    <img src="" alt="">
-                </v-avatar>-->
-                <span class="pl-3">{{authorName}}</span>
-            </div>
+            <user-link :user="message.author" size="48"></user-link>
             <div class="pt-3">{{message.text}}</div>
 
         </v-card-text>
@@ -52,16 +41,13 @@
 
 <script>
     import { mapActions } from 'vuex'
-    import CommentList from '../comment/CommentList.vue'
+    import CommentList from 'components/comment/CommentList.vue'
+    import UserLink from "components/UserLink.vue";
 
     export default {
         components: {
+          UserLink,
             CommentList
-        },
-        computed: {
-            authorName() {
-                return this.message.author ? this.message.author.username : 'unknown'
-            }
         },
         props: ['message', 'editMessage', 'redact'],
         methods: {

@@ -4,17 +4,17 @@ import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.UserDetails;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.dto.MessagePageDto;
-import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserRepo;
 import ageevcode.myMessenger.service.MessageService;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,40 +34,48 @@ import static ageevcode.myMessenger.controller.MessageController.MESSAGES_PER_PA
 public class htmlController {
     private final MessageService messageService;
     private final UserRepo userRepo;
-    private final ObjectWriter writer;
+    private final ObjectWriter messageWriter;
+    private final ObjectWriter profileWriter;
 
     @Autowired
     public htmlController(MessageService messageService, UserRepo userRepo, ObjectMapper mapper) {
         this.messageService = messageService;
         this.userRepo = userRepo;
-        writer = mapper
-                .setConfig(mapper.getSerializationConfig())
+        ObjectMapper objectMapper = mapper
+                .setConfig(mapper.getSerializationConfig());
+        messageWriter = objectMapper
                 .writerWithView(Views.FullMessage.class);
+        profileWriter = objectMapper
+                .writerWithView(Views.WithoutPassword.class);
+
     }
 
     @Value("${spring.profiles.active}")
     private String isDevMode;
 
     @GetMapping
-    public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) throws JsonProcessingException {
+    public String main(Model model) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
-        Object test = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (test != "anonymousUser") {
-            data.put("profile", test);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = userRepo.findByUsername(auth.getName());
+        if (user != null) {
+            UserDetails userFromDb = userRepo.findById(user.getId()).get();
+            String serializedProfile = profileWriter.writeValueAsString(userFromDb);
+            model.addAttribute("profile", serializedProfile);
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
             PageRequest pageRequest = PageRequest.of(0, MESSAGES_PER_PAGE, sort);
             MessagePageDto messagePageDto = messageService.findAll(pageRequest);
 
-            String messages = writer.writeValueAsString(messagePageDto.getMessages());
+            String messages = messageWriter.writeValueAsString(messagePageDto.getMessages());
 
             model.addAttribute("messages", messages);
 
             data.put("currentPage", messagePageDto.getCurrentPage());
             data.put("totalPages", messagePageDto.getTotalPages());
         } else {
-            data.put("profile", null);
-            data.put("messages", "[]");
+            model.addAttribute("profile", "null");
+            model.addAttribute("messages", "[]");
         }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(isDevMode));
@@ -124,53 +132,4 @@ public class htmlController {
 
     private class MESSAGES_PER_PAGE {
     }
-
-/*
-    @GetMapping("profile")
-    @JsonView(Views.WithoutPassword.class)
-    public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        HashMap<Object, Object> data = new HashMap<>();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //Object principal = auth.getPrincipal();
-
-        //ArrayList<Object> userProfile = new ArrayList<>();
-        //userProfile.add(principal);
-        //Object test = userRepo.findByUsername(auth.getName());
-        //long userId = userDetails.getId();
-        //Object test = principal;
-        //Object test = userDetails.getLastVisit();
-        //userProfile.add(test);
-
-
-        userRepo.findByUsername(auth.getName()).setPassword(null);
-        Object profile = userRepo.findByUsername(auth.getName());
-
-        if (profile != null) {
-            //data.put("profile", test);
-            //data.put("profile", principal);
-            data.put("profile", profile);
-            //data.put("userId", userProfile);
-        } else {
-            data.put("profile", null);
-        }
-        model.addAttribute("frontendData", data);
-        model.addAttribute("isDevMode", "dev".equals(isDevMode));
-
-
-        return "profile";
-    }
-*/
-
-/*    @GetMapping("about")
-    @JsonView(Views.WithoutPassword.class)
-    public String test(Model model) {
-        model.addAttribute("isDevMode", "dev".equals(isDevMode));
-        return "about";
-    }*/
-/*    @GetMapping("admin")
-    public String admin() {
-        //Role.ADMIN.name()
-        return "admin";
-    }*/
 }
