@@ -32,7 +32,7 @@
             </i>
           </v-flex>
         </v-layout>
-        <v-btn v-if="!isMyProfile" @click="changeSubscription">{{isImSubscribed ? 'Отписаться': 'Подписаться'}}</v-btn>
+        <v-btn v-if="!isMyProfile" @click="changeSubscription">{{isImSubscribed ? 'Отписаться' : 'Подписаться'}}</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -50,11 +50,13 @@ export default {
   } ,
   computed: {
     isMyProfile() {
+      console.log(`${this.$store.state.profile.id} imp`)
       return !this.$route.params.id || this.$route.params.id === this.$store.state.profile.id
     },
     isImSubscribed() {
       return this.profile.subscribers && this.profile.subscribers.find(subscription => {
-        return subscription.id === this.$store.state.profile.id
+        console.log(subscription)
+        return subscription === this.$store.state.profile.id
       })
     },
   },
@@ -69,7 +71,6 @@ export default {
       this.profile = await data.json()
     },
     async updateProfile() {
-      console.log(this.$route.params.id)
       const id = this.$route.params.id || this.$store.state.profile.id
 
       const data = await profileApi.get(id)
