@@ -1,7 +1,7 @@
 package ageevcode.myMessenger.controller;
 
 import ageevcode.myMessenger.domain.Comment;
-import ageevcode.myMessenger.domain.UserDetails;
+import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.dto.EventType;
 import ageevcode.myMessenger.dto.ObjectType;
@@ -37,7 +37,7 @@ public class CommentController {
 
     @PostMapping
     @JsonView(Views.FullComment.class)
-    public Comment create(@RequestBody Comment comment, @AuthenticationPrincipal UserDetails userDetails) {
+    public Comment create(@RequestBody Comment comment, @AuthenticationPrincipal User user) {
         //return commentService.create(comment, userDetails);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         comment.setAuthor(userRepo.findByUsername(auth.getName()));

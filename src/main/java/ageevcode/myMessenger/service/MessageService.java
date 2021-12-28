@@ -2,7 +2,6 @@ package ageevcode.myMessenger.service;
 
 import ageevcode.myMessenger.domain.Comment;
 import ageevcode.myMessenger.domain.Message;
-import ageevcode.myMessenger.domain.UserDetails;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.dto.EventType;
 import ageevcode.myMessenger.dto.MessagePageDto;

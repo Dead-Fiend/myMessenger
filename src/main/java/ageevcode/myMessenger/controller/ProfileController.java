@@ -1,6 +1,6 @@
 package ageevcode.myMessenger.controller;
 
-import ageevcode.myMessenger.domain.UserDetails;
+import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.UserRepo;
 import ageevcode.myMessenger.service.ProfileService;
@@ -29,7 +29,7 @@ public class ProfileController {
 
     @GetMapping("{id}")
     @JsonView(Views.WithoutPassword.class)
-    public UserDetails getOne(@PathVariable("id") UserDetails userDetails, Model model) {
+    public User getOne(@PathVariable("id") User user, Model model) {
         //UserDetails userDetailsWithoutPasswd = userDetails;
         //userDetailsWithoutPasswd.setPassword(null);
         //return userDetailsWithoutPasswd;
@@ -42,17 +42,17 @@ public class ProfileController {
 
         HashMap<Object, Object> data = new HashMap<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails profile = userRepo.findByUsername(auth.getName());
+        User profile = userRepo.findByUsername(auth.getName());
         data.put("profile", profile);
         model.addAttribute("frontendData", data);
-        return userDetails;
+        return user;
     }
 
     @PostMapping("change-subscription/{channelId}")
     @JsonView(Views.WithoutPassword.class)
-    public UserDetails changeSubscription(@PathVariable("channelId") UserDetails channel) {
+    public User changeSubscription(@PathVariable("channelId") User channel) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails subscriber = userRepo.findByUsername(auth.getName());
+        User subscriber = userRepo.findByUsername(auth.getName());
 
         if (subscriber.equals(channel)) {
             return channel;
@@ -62,10 +62,10 @@ public class ProfileController {
     }
 
     @PutMapping("{id}")
-    public UserDetails update(@PathVariable("id") UserDetails userDetailsFromDB, @RequestBody UserDetails userDetails) {
-        userDetails.setUpdatedAt(LocalDateTime.now());
-        BeanUtils.copyProperties(userDetails, userDetailsFromDB, "password", "id");
+    public User update(@PathVariable("id") User userFromDB, @RequestBody User user) {
+        user.setUpdatedAt(LocalDateTime.now());
+        BeanUtils.copyProperties(user, userFromDB, "password", "id");
         //BeanUtils.copyProperties(userDetails, userDetailsFromDB, "id");
-        return userRepo.save(userDetailsFromDB);
+        return userRepo.save(userFromDB);
     }
 }

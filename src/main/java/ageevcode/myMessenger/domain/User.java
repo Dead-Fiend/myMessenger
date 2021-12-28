@@ -7,17 +7,20 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "usr")
 @Data
 @EqualsAndHashCode(of = { "id" })
-public class UserDetails implements Serializable {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.Id.class)
@@ -54,7 +57,7 @@ public class UserDetails implements Serializable {
             property = "id",
             generator = ObjectIdGenerators.PropertyGenerator.class
     )
-    private Set<UserDetails> subscriptions;
+    private Set<User> subscriptions;
 
     @ManyToMany
     @JoinTable(
@@ -68,6 +71,30 @@ public class UserDetails implements Serializable {
             property = "id",
             generator = ObjectIdGenerators.PropertyGenerator.class
     )
-    private Set<UserDetails> subscribers;
+    private Set<User> subscribers;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return getActive();
+    }
 }

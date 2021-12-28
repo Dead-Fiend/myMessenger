@@ -1,12 +1,9 @@
 package ageevcode.myMessenger.controller;
 
-import ageevcode.myMessenger.domain.Message;
-import ageevcode.myMessenger.domain.UserDetails;
-import ageevcode.myMessenger.domain.Views;
-import ageevcode.myMessenger.dto.EventType;
+import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.repo.UserRepo;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +20,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public List<UserDetails> list(Model model) {
-
+    public List<User> list(Model model, @AuthenticationPrincipal User user) {
+        System.out.println(user.getId());
         model.addAttribute("userList", userRepo.findAll());
         return userRepo.findAll();
     }
@@ -33,7 +30,7 @@ public class AdminController {
         model.addAttribute("userList", userRepo.findAll());
     }*/
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") UserDetails userDetails) {
-        userRepo.delete(userDetails);
+    public void delete(@PathVariable("id") User user) {
+        userRepo.delete(user);
     }
 }
