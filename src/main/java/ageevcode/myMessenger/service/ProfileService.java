@@ -42,13 +42,14 @@ public class ProfileService implements UserDetailsService {
         return userRepo.findByUsername(username);
     }
 
-
-
-
-
     // ---------------------------------------------------------------------------------------- //
+
     public boolean addUser(User user) {
         User userFromDB = userRepo.findByUsername(user.getUsername());
+
+        if (user.getUsername().length() < 3 || user.getPassword().length() < 8) {
+            return false;
+        }
 
         if (userFromDB != null) {
             return false;
@@ -56,11 +57,7 @@ public class ProfileService implements UserDetailsService {
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-
-        //test//
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //test//
-
         userRepo.save(user);
 
         return true;

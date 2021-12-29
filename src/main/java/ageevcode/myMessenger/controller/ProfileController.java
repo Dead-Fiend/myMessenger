@@ -1,5 +1,6 @@
 package ageevcode.myMessenger.controller;
 
+import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.UserRepo;
@@ -13,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("profile")
@@ -30,15 +33,10 @@ public class ProfileController {
     @GetMapping("{id}")
     @JsonView(Views.WithoutPassword.class)
     public User getOne(@PathVariable("id") User user, Model model) {
-        //UserDetails userDetailsWithoutPasswd = userDetails;
-        //userDetailsWithoutPasswd.setPassword(null);
-        //return userDetailsWithoutPasswd;
 
-
-        /*HashSet<Role> updtRole = new HashSet<>();
-        updtRole.add(Role.ADMIN);
-        userDetails.setRoles(updtRole);
-        return userRepo.save(userDetails);*/
+/*        user.getRoles().add(Role.USER);
+        user.getRoles().add(Role.ADMIN);
+        return userRepo.save(user);*/
 
         HashMap<Object, Object> data = new HashMap<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -61,11 +59,11 @@ public class ProfileController {
         }
     }
 
-    @PutMapping("{id}")
+/*    @PutMapping("{id}")
     public User update(@PathVariable("id") User userFromDB, @RequestBody User user) {
         user.setUpdatedAt(LocalDateTime.now());
         BeanUtils.copyProperties(user, userFromDB, "password", "id");
         //BeanUtils.copyProperties(userDetails, userDetailsFromDB, "id");
         return userRepo.save(userFromDB);
-    }
+    }*/
 }
