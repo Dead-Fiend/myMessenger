@@ -50,12 +50,13 @@ export default {
   } ,
   computed: {
     isMyProfile() {
-      console.log(`${this.$store.state.profile.id} imp`)
-      return !this.$route.params.id || this.$route.params.id === this.$store.state.profile.id
+      console.log(!this.$route.params.id)
+      console.log(this.$route.params.id)
+      console.log(this.$store.state.profile.id)
+      return !this.$route.params.id || this.$route.params.id == this.$store.state.profile.id
     },
     isImSubscribed() {
       return this.profile.subscribers && this.profile.subscribers.find(subscription => {
-        console.log(subscription)
         return subscription === this.$store.state.profile.id
       })
     },

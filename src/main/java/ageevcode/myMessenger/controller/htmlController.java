@@ -93,11 +93,10 @@ public class htmlController {
         if (result) {
             return "redirect:/auth";
         } else {
-            model.put("err", "User exists!");
             return "redirect:/reg";
         }
     }
 
-    private class MESSAGES_PER_PAGE {
-    }
+/*    private class MESSAGES_PER_PAGE {
+    }*/
 }
