@@ -29,7 +29,20 @@
                         ></v-progress-linear>
                       </template>
                     </v-text-field>
-                    <v-text-field v-model="value_p" class="ma-1" name="password" :type="'password'" label="Пароль" @keyup.enter="submit" required loading>
+                    <v-text-field
+                        :append-icon="show ? 'visibility' : 'visibility_off'"
+                        :type="show ? 'text' : 'password'"
+                        @click:append="show = !show"
+                        :rules="[rules.required, rules.min]"
+
+                        v-model="value_p"
+                        class="ma-1"
+                        name="password"
+
+                        label="Пароль"
+                        @keyup.enter="submit"
+                        required loading
+                    >
                       <template v-slot:progress>
                         <v-progress-linear
                             :value="progress_p"
@@ -57,29 +70,38 @@
 </template>
 
 <script>
-    export default {
-        name: 'Registration',
-      data: () => ({
-        value_l: '',
-        value_p: '',
-      }),
-      computed: {
-        progress_l () {
-          return Math.min(100, this.value_l.length * 33.3)
-        },
-        color_l () {
-          return ['error', 'error', 'success'][Math.floor(this.progress_l / 40)]
-        },
-        progress_p () {
-          return Math.min(100, this.value_p.length * 5)
-        },
-        color_p () {
-          return ['error', 'warning', 'success'][Math.floor(this.progress_p / 40)]
-        },
-      },
+export default {
+  name: 'Registration',
+  data() {
+    return {
+      value_l: '',
+      value_p: '',
+      show: false,
+      rules: {
+        required: value => !!value || 'Обязательное поле',
+        min: v => v.length >= 8 || 'Минимум 8 символов',
+      }
     }
+  },
+  computed: {
+    progress_l () {
+      return Math.min(100, this.value_l.length * 33.3)
+    },
+    color_l () {
+      return ['error', 'error', 'success'][Math.floor(this.progress_l / 40)]
+    },
+    progress_p () {
+      return Math.min(100, this.value_p.length * 5)
+    },
+    color_p () {
+      return ['error', 'warning', 'success'][Math.floor(this.progress_p / 40)]
+    },
+  },
+}
 </script>
 
 <style>
-
+.v-text-field .v-input__append-inner, .v-text-field .v-input__prepend-inner {
+  transform: scale(0.9);
+}
 </style>

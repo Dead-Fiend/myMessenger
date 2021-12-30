@@ -19,7 +19,15 @@
                         placeholder="Введите логин"
                         required autofocus>
                     </v-text-field>
-                    <v-text-field class="ma-1" name="password" :type="'password'" label="Пароль" @keyup.enter="submit" required/>
+                    <v-text-field
+                        :append-icon="show ? 'visibility' : 'visibility_off'"
+                        :type="show ? 'text' : 'password'"
+                        @click:append="show = !show"
+                        class="ma-1"
+                        name="password"
+                        label="Пароль"
+                        @keyup.enter="submit"
+                        required/>
                     <v-btn type="submit" depressed color="primary" class="mb-4">Войти</v-btn>
                   </v-form>
                 </v-card>
@@ -40,10 +48,17 @@
 <script>
     export default {
         name: 'Auth',
+      data() {
+        return {
+          show: false,
+        }
+      },
     }
 
 </script>
 
 <style>
-
+.v-text-field .v-input__append-inner, .v-text-field .v-input__prepend-inner {
+  transform: scale(0.9);
+}
 </style>
