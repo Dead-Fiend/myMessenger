@@ -6,7 +6,7 @@
         </v-layout>
         <v-layout row v-if="!isRedact">
             <v-text-field label="Новое сообщение" placeholder="Напишите что-нибудь" v-model="text" @keyup.enter="save" />
-            <v-btn class="ma-2" @click="save">Отправить</v-btn>
+            <v-btn class="ma-2" @click="save" style="color: darkslategray" icon><v-icon class="material-icons-round">send</v-icon></v-btn>
         </v-layout>
     </div>
 </template>

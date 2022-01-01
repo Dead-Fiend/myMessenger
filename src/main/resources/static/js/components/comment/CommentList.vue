@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container style="padding-left: 3%; padding-right: 5%">
         <v-list two-line>
             <v-subheader>Комментарии</v-subheader>
 

@@ -10,12 +10,20 @@
               <v-flex>
                 <v-card class="px-2" style="margin: auto" width="500">
                   <v-card-title>Регистрация</v-card-title>
-                  <v-form width="350px" action="/registration" method="post" justify="center" align="center">
+                  <v-form
+                      width="350px"
+                      action="/registration"
+                      method="post"
+                      justify="center"
+                      align="center"
+                      ref="form"
+                  >
                     <v-text-field
                         v-model="value_l"
                         class="ma-1"
                         name="username"
                         :type="'text'"
+                        :rules="[rules_l.required, rules_l.min]"
                         label="Логин"
                         placeholder="Введите логин"
                         required autofocus loading
@@ -30,10 +38,21 @@
                       </template>
                     </v-text-field>
                     <v-text-field
+                        class="ma-1"
+                        name="email"
+                        label="Email"
+                        placeholder="Введите email"
+                        v-model="value_e"
+                        :rules="rules_e"
+                        required
+                    >
+
+                    </v-text-field>
+                    <v-text-field
                         :append-icon="show ? 'visibility' : 'visibility_off'"
                         :type="show ? 'text' : 'password'"
                         @click:append="show = !show"
-                        :rules="[rules.required, rules.min]"
+                        :rules="[rules_p.required, rules_p.min]"
 
                         v-model="value_p"
                         class="ma-1"
@@ -52,7 +71,7 @@
                         ></v-progress-linear>
                       </template>
                     </v-text-field>
-                    <v-btn type="submit" depressed color="primary" class="mb-4">Зарегистрироваться</v-btn>
+                    <v-btn @click="validate" depressed color="primary" class="mb-4">Зарегистрироваться</v-btn>
                   </v-form>
                 </v-card>
               </v-flex>
@@ -74,13 +93,27 @@ export default {
   name: 'Registration',
   data() {
     return {
+      isValid: false,
       value_l: '',
       value_p: '',
+      value_e: '',
       show: false,
-      rules: {
+      rules_p: {
         required: value => !!value || 'Обязательное поле',
         min: v => v.length >= 8 || 'Минимум 8 символов',
-      }
+      },
+      rules_l: {
+        required: value => !!value || 'Обязательное поле',
+        min: v => v.length >= 3 || 'Минимум 3 символа',
+      },
+      rules_e: [
+        value => !!value || 'Обязательное поле',
+        value => (value || '').length <= 50 || 'Максимум 50 символов',
+        value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Invalid e-mail.'
+        },
+      ]
     }
   },
   computed: {
@@ -97,6 +130,14 @@ export default {
       return ['error', 'warning', 'success'][Math.floor(this.progress_p / 40)]
     },
   },
+  methods: {
+    validate () {
+      this.$refs.form.validate()
+      if (this.$refs.form.validate()) {
+        this.$refs.form.$el.submit()
+      }
+    },
+  }
 }
 </script>
 

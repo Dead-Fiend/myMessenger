@@ -35,7 +35,7 @@
                 <v-icon>close</v-icon>
             </v-btn>
         </v-card-actions>
-        <comment-list :comments="message.comments" :message-id="message.id"></comment-list>
+        <comment-list :comments="message.comments" :message-id="message.id" width="40%"></comment-list>
     </v-card>
 </template>
 
