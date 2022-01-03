@@ -34,9 +34,9 @@ public class ProfileController {
     @JsonView(Views.WithoutPassword.class)
     public User getOne(@PathVariable("id") User user, Model model) {
 
-/*        user.getRoles().add(Role.USER);
-        user.getRoles().add(Role.ADMIN);
-        return userRepo.save(user);*/
+        /*user.getRoles().add(Role.USER);*/
+        /*user.getRoles().add(Role.ADMIN);*/
+        /*return userRepo.save(user);*/
 
         HashMap<Object, Object> data = new HashMap<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -47,7 +47,7 @@ public class ProfileController {
     }
 
     @PostMapping("change-subscription/{channelId}")
-    @JsonView(Views.WithoutPassword.class)
+
     public User changeSubscription(@PathVariable("channelId") User channel) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User subscriber = userRepo.findByUsername(auth.getName());

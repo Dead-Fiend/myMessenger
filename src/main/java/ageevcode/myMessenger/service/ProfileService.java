@@ -37,6 +37,7 @@ public class ProfileService implements UserDetailsService {
 
         return userRepo.save(channel);
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByUsername(username);

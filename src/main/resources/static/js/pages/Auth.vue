@@ -38,7 +38,7 @@
                         class="ma-1"
                         name="password"
                         label="Пароль"
-                        @keyup.enter="submit"
+                        @keyup.enter="validate"
                         required
                     >
                     </v-text-field>
