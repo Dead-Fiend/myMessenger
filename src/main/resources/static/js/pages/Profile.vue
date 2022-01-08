@@ -53,11 +53,8 @@ export default {
       return !this.$route.params.id || this.$route.params.id == this.$store.state.profile.id
     },
     isImSubscribed() {
-      console.log(this.profile.subscribers && this.profile.subscribers.find(subscription => {
-        return subscription === this.$store.state.profile.id
-      }))
       return this.profile.subscribers && this.profile.subscribers.find(subscription => {
-        return subscription.id === this.$store.state.profile.id
+        return subscription.subscriber === this.$store.state.profile.id
       })
     },
   },

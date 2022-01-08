@@ -1,7 +1,10 @@
 package ageevcode.myMessenger.controller;
 
 import ageevcode.myMessenger.domain.User;
+import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.UserRepo;
+import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -20,15 +23,12 @@ public class AdminController {
     }
 
     @GetMapping
-    public List<User> list(Model model, @AuthenticationPrincipal User user) {
-        System.out.println(user.getId());
+    @JsonView(Views.WithoutPassword.class)
+    public List<User> list(Model model) {
         model.addAttribute("userList", userRepo.findAll());
         return userRepo.findAll();
     }
-/*    @GetMapping
-    public void list(Model model) {
-        model.addAttribute("userList", userRepo.findAll());
-    }*/
+
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") User user) {
         userRepo.delete(user);
