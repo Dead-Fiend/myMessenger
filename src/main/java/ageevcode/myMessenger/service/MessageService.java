@@ -7,7 +7,6 @@ import ageevcode.myMessenger.dto.ObjectType;
 import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserSubscriptionRepo;
 import ageevcode.myMessenger.util.WsSender;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -54,11 +52,13 @@ public class MessageService {
         message.setUpdatedAt(LocalDateTime.now());
 
         message.setAuthor(user);
+
         List<Comment> list = new ArrayList<>();
         message.setComments(list);
+
         Message updatedMessage = messageRepo.save(message);
 
-        wsSender.accept(EventType.CREATE, message);
+        wsSender.accept(EventType.CREATE, updatedMessage);
 
         return updatedMessage;
     }
@@ -69,8 +69,11 @@ public class MessageService {
                 .filter(UserSubscription::isActive)
                 .map(UserSubscription::getChannel)
                 .collect(Collectors.toList());
+
         channels.add(user);
+
         Page<Message> page = messageRepo.findByAuthorIn(channels, pageable);
+
         return new MessagePageDto(
                 page.getContent(),
                 pageable.getPageNumber(),

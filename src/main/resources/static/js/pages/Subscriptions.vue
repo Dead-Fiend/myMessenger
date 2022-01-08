@@ -4,7 +4,7 @@
       <v-list>
         <v-list-item v-for="item in subscriptions" :key="item.id">
           <user-link :user="item.subscriber" size="24"></user-link>
-          <v-btn @click="changeSubscriptionStatus(item.subscriber.id)">{{item.active ? 'Отклонить' : 'Поодтвердить'}}</v-btn>
+          <v-btn @click="changeSubscriptionStatus(item.subscriber.id)">{{item.active ? 'Отклонить' : 'Подтвердить'}}</v-btn>
         </v-list-item>
       </v-list>
     </v-layout>
