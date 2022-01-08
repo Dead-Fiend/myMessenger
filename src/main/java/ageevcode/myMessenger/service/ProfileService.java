@@ -4,6 +4,7 @@ import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.UserSubscription;
 import ageevcode.myMessenger.repo.UserRepo;
+import ageevcode.myMessenger.repo.UserSubscriptionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,19 +14,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class ProfileService implements UserDetailsService {
     private final UserRepo userRepo;
+    private final UserSubscriptionRepo userSubscriptionRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProfileService(UserRepo userRepo) {
+    public ProfileService(UserRepo userRepo, UserSubscriptionRepo userSubscriptionRepo) {
         this.userRepo = userRepo;
+        this.userSubscriptionRepo = userSubscriptionRepo;
     }
 
 
@@ -71,5 +73,16 @@ public class ProfileService implements UserDetailsService {
         userRepo.save(user);
 
         return true;
+    }
+
+    public List<UserSubscription> getSubscribers(User channel) {
+        return userSubscriptionRepo.findByChannel(channel);
+    }
+
+    public UserSubscription changeSubscriptionStatus(User channel, User subscriber) {
+        UserSubscription subscription = userSubscriptionRepo.findByChannelAndSubscriber(channel, subscriber);
+        subscription.setActive(!subscription.isActive());
+
+        return userSubscriptionRepo.save(subscription);
     }
 }

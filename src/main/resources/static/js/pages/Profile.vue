@@ -19,18 +19,23 @@
               <span v-else>Выключён</span>
             </i>
           </v-flex>
-          <v-flex>
-            <span>Количество подписчиков:</span>
-            <i>
-              <span>{{profile.subscribers && profile.subscribers.length}}</span>
-            </i>
-          </v-flex>
-          <v-flex>
+          <v-flex v-if="!isMyProfile">
             <span>Количество подписок:</span>
             <i>
               <span>{{profile.subscriptions && profile.subscriptions.length}}</span>
             </i>
           </v-flex>
+          <router-link v-if="isMyProfile" :to="`/subscriptions/${profile.id}`">
+
+          </router-link>
+          <v-flex v-if="!isMyProfile">
+            <span>Количество подписчиков:</span>
+            <i>
+              <span>{{profile.subscribers && profile.subscribers.length}}</span>
+            </i>
+          </v-flex>
+
+
         </v-layout>
         <v-btn v-if="!isMyProfile" @click="changeSubscription">{{isImSubscribed ? 'Отписаться' : 'Подписаться'}}</v-btn>
       </v-flex>

@@ -1,22 +1,19 @@
 package ageevcode.myMessenger.controller;
 
-import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.User;
+import ageevcode.myMessenger.domain.UserSubscription;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.UserRepo;
 import ageevcode.myMessenger.service.ProfileService;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 @RestController
 @RequestMapping("profile")
@@ -47,7 +44,6 @@ public class ProfileController {
     }
 
     @PostMapping("change-subscription/{channelId}")
-
     public User changeSubscription(@PathVariable("channelId") User channel) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User subscriber = userRepo.findByUsername(auth.getName());
@@ -57,6 +53,20 @@ public class ProfileController {
         } else {
             return profileService.changeSubscription(channel, subscriber);
         }
+    }
+
+    @GetMapping("get-subscribers/{channelId}")
+    @JsonView(Views.IdName.class)
+    public List<UserSubscription> subscribers(@PathVariable("channelId") User channel) {
+        return profileService.getSubscribers(channel);
+    }
+
+    @PostMapping("change-status/{subscriberId}")
+    @JsonView(Views.IdName.class)
+    public UserSubscription changeSubscriptionStatus(@PathVariable("subscriberId") User subscriber) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User channel = userRepo.findByUsername(auth.getName());
+        return profileService.changeSubscriptionStatus(channel, subscriber);
     }
 
 /*    @PutMapping("{id}")
