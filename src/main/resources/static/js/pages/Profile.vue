@@ -26,7 +26,10 @@
             </i>
           </v-flex>
           <router-link v-if="isMyProfile" :to="`/subscriptions/${profile.id}`">
-
+            <span>Количество подписчиков:</span>
+            <i>
+              <span>{{profile.subscribers && profile.subscribers.length}}</span>
+            </i>
           </router-link>
           <v-flex v-if="!isMyProfile">
             <span>Количество подписчиков:</span>
