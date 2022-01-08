@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,13 +52,13 @@ public class htmlController {
     private String isDevMode;
 
     @GetMapping
-    public String main(Model model) throws JsonProcessingException {
+    public String main(Model model, @AuthenticationPrincipal User user) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepo.findByUsername(auth.getName());
+
         if (user != null) {
             User userFromDb = userRepo.findById(user.getId()).get();
             String serializedProfile = profileWriter.writeValueAsString(userFromDb);
+
             model.addAttribute("profile", serializedProfile);
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
@@ -96,7 +95,4 @@ public class htmlController {
             return "redirect:/reg";
         }
     }
-
-/*    private class MESSAGES_PER_PAGE {
-    }*/
 }

@@ -19,7 +19,7 @@
               <span v-else>Выключён</span>
             </i>
           </v-flex>
-          <v-flex v-if="!isMyProfile">
+          <v-flex>
             <span>Количество подписок:</span>
             <i>
               <span>{{profile.subscriptions && profile.subscriptions.length}}</span>

@@ -21,7 +21,7 @@
 -->
 
 <template>
-    <v-card class="my-2">
+    <v-card class="my-2" v-if="">
         <v-card-text class="text--primary">
             <user-link :user="message.author" size="48"></user-link>
             <div class="pt-3">{{message.text}}</div>
