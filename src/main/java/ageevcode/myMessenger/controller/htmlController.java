@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,13 +88,14 @@ public class htmlController {
         return "registration";
     }
     @PostMapping("registration")
-    public String addUser(User user, Map<String, Object> model) {
-        boolean result = profileService.addUser(user);
+    public String addUser(User user, HttpServletRequest request, Map<String, Object> model) throws ServletException {
+        boolean result = profileService.addUser(user, request);
 
-        if (result) {
-            return "redirect:/auth";
+        /*if (result) {
+            return "redirect:/";
         } else {
             return "redirect:/reg";
-        }
+        }*/
+        return "redirect:/reg";
     }
 }

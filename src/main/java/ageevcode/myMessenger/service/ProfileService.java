@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,9 +56,7 @@ public class ProfileService implements UserDetailsService {
         return userRepo.findByUsername(username);
     }
 
-    // ---------------------------------------------------------------------------------------- //
-
-    public boolean addUser(User user) {
+    public boolean addUser(User user, HttpServletRequest request) throws ServletException {
         User userFromDB = userRepo.findByUsername(user.getUsername());
 
         if (user.getUsername().length() < 3 || user.getPassword().length() < 8) {
@@ -66,12 +66,15 @@ public class ProfileService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
+        String usrnm = user.getUsername();;
+        String passwd = user.getPassword();
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
+        request.login(usrnm, passwd);
         return true;
     }
 
