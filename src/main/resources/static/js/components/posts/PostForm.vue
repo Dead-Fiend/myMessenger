@@ -15,7 +15,7 @@
     import { mapActions } from "vuex";
 
     export default {
-        props: ['messageAttr', 'redact'],
+        props: ['postAttr', 'redact'],
         data() {
             return {
                 text: '',
@@ -25,7 +25,7 @@
 
         },
         watch: {
-            messageAttr(newVal) {
+            postAttr(newVal) {
                 this.text = newVal.text
                 this.id = newVal.id
                 this.isRedact = true
@@ -33,17 +33,17 @@
 
         },
         methods: {
-            ...mapActions(['addMessageAction', 'updateMessageAction']),
+            ...mapActions(['addPostAction', 'updatePostAction']),
             save() {
-                const message = {
+                const post = {
                     id: this.id,
                     text: this.text
                 }
 
                 if (this.id) {
-                    this.updateMessageAction(message)
+                    this.updatePostAction(post)
                 } else {
-                    this.addMessageAction(message)
+                    this.addPostAction(post)
 
 
                 }

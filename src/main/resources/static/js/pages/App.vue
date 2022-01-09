@@ -28,11 +28,6 @@
             <router-view></router-view>
         </v-main>
     </v-app>
-    <!--Необходимо
-<a href="/auth">Войти</a>
-или
-<a href="/reg">Зарегестрироваться</a>-->
-
 </template>
 
 <script>
@@ -40,33 +35,33 @@
     import { mapState, mapMutations } from 'vuex'
 
     export default {
-        computed: mapState(['profile', 'messages', 'redact']),
+        computed: mapState(['profile', 'posts', 'redact']),
         methods: mapMutations([
-            'addMessageMutation',
-            'updateMessageMutation',
-            'removeMessageMutation',
-            'addCommentMutation'
+            'addPostMutation',
+            'updatePostMutation',
+            'removePostMutation',
+            'addPostMutation'
         ]),
         created() {
             addHandler(data => {
-                if (data.objectType === 'MESSAGE') {
-                    let index = this.messages.findIndex(item => item.id === data.body.id)
+                if (data.objectType === 'POST') {
+                    let index = this.posts.findIndex(item => item.id === data.body.id)
                     switch (data.eventType) {
                         case 'CREATE':
-                            this.addMessageMutation(data.body)
+                            this.addPostMutation(data.body)
                             break
                         case 'UPDATE':
-                            this.updateMessageMutation(data.body)
+                            this.updatePostMutation(data.body)
                             break
                         case 'REMOVE':
-                            this.removeMessageMutation(data.body)
+                            this.removePostMutation(data.body)
                             break
                         default:
                             console.error(`Looks like the event type is unknown | "${data.eventType}"`)
 
                     }
                 } else if (data.objectType === 'COMMENT') {
-                    let index = this.messages.findIndex(item => item.id === data.body.id)
+                    let index = this.posts.findIndex(item => item.id === data.body.id)
                     switch (data.eventType) {
                         case 'CREATE':
                             this.addCommentMutation(data.body)

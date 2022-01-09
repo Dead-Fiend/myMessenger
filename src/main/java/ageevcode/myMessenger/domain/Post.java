@@ -17,7 +17,7 @@ import java.util.List;
 @ToString(of = {"id", "text"})
 @EqualsAndHashCode(of = {"id"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Message {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.Id.class)
@@ -25,16 +25,16 @@ public class Message {
     @JsonView(Views.IdName.class)
     private String text;
     @Column(updatable = false)
-    @JsonView(Views.FullMessage.class)
+    @JsonView(Views.FullPost.class)
     private LocalDateTime createdAt;
-    @JsonView(Views.FullMessage.class)
+    @JsonView(Views.FullPost.class)
     private LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonView(Views.FullMessage.class)
+    @JsonView(Views.FullPost.class)
     private User author;
-    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
-    @JsonView(Views.FullMessage.class)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonView(Views.FullPost.class)
     private List<Comment> comments;
 
 }

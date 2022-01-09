@@ -1,8 +1,8 @@
 <template>
     <v-card class="my-2">
         <v-card-text class="text--primary">
-            <user-link :user="message.author" size="48"></user-link>
-            <div class="pt-3">{{message.text}}</div>
+            <user-link :user="post.author" size="48"></user-link>
+            <div class="pt-3">{{post.text}}</div>
 
         </v-card-text>
         <v-card-actions>
@@ -13,7 +13,7 @@
                 <v-icon>close</v-icon>
             </v-btn>
         </v-card-actions>
-        <comment-list :comments="message.comments" :message-id="message.id" width="40%"></comment-list>
+        <comment-list :comments="post.comments" :post-id="post.id" width="40%"></comment-list>
     </v-card>
 </template>
 
@@ -23,18 +23,19 @@
     import UserLink from "components/UserLink.vue";
 
     export default {
+      name: "PostRow",
         components: {
           UserLink,
             CommentList
         },
-        props: ['message', 'editMessage', 'redact'],
+        props: ['post', 'editPost', 'redact'],
         methods: {
-            ...mapActions(['removeMessageAction']),
+            ...mapActions(['removePostAction']),
             edit() {
-                this.editMessage(this.message)
+                this.editPost(this.post)
             },
             del() {
-                this.removeMessageAction(this.message)
+                this.removePostAction(this.post)
             },
         }
     }

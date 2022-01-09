@@ -24,7 +24,7 @@ import {mapActions} from "vuex";
 
 export default {
   name: 'CommentForm',
-  props: ['messageId'],
+  props: ['postId'],
   data() {
     return {
       text: '',
@@ -35,8 +35,8 @@ export default {
     }
   },
   watch: {
-    messageId(newVal) {
-      this.messageId = newVal
+    postId(newVal) {
+      this.postId = newVal
     }
   },
   methods: {
@@ -44,8 +44,8 @@ export default {
     save() {
       this.addCommentAction({
         text: this.text,
-        message: {
-          id: this.messageId
+        post: {
+          id: this.postId
         },
       })
       this.text = ''

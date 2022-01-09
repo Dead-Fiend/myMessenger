@@ -1,4 +1,3 @@
-
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs'
 
@@ -11,8 +10,8 @@ export function connect() {
     stompClient = Stomp.over(socket)
     stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        stompClient.subscribe('/topic/activity', message => {
-            handlers.forEach(handler => handler(JSON.parse(message.body)))
+        stompClient.subscribe('/topic/activity', post => {
+            handlers.forEach(handler => handler(JSON.parse(post.body)))
         })
     })
 }
@@ -28,10 +27,10 @@ export function disconnect() {
     console.log("Disconnected")
 }
 
-export function sendMessage(message) {
-    stompClient.send("/app/changeMessage", {}, JSON.stringify(message))
+export function sendPost(post) {
+    stompClient.send("/app/changePost", {}, JSON.stringify(post))
 }
 
-export function removeMessage(message) {
-    stompClient.send("/app/removeMessage", {}, JSON.stringify(message))
+export function removePost(post) {
+    stompClient.send("/app/removePost", {}, JSON.stringify(post))
 }

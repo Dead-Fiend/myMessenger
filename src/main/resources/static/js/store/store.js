@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from 'vuex';
-import messagesApi from "api/messages";
+import postsApi from "api/posts";
 import commentApi from "api/comment";
 
 
@@ -8,53 +8,53 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        messages,
+        posts,
         profile,
         ...frontendData,
         redact: redact,
     },
     getters: {
-        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id)),
+        sortedPosts: state => (state.posts || []).sort((a, b) => -(a.id - b.id)),
     },
     mutations: {
-        addMessageMutation(state, message) {
-            state.messages = [
-                ...state.messages,
-                message
+        addPostMutation(state, post) {
+            state.posts = [
+                ...state.posts,
+                post
             ]
         },
-        updateMessageMutation(state, message) {
-            const updateIndex = state.messages.findIndex(item => item.id === message.id)
-            state.messages = [
-                ...state.messages.slice(0, updateIndex),
-                message,
-                ...state.messages.slice(updateIndex+1)
+        updatePostMutation(state, post) {
+            const updateIndex = state.posts.findIndex(item => item.id === post.id)
+            state.posts = [
+                ...state.posts.slice(0, updateIndex),
+                post,
+                ...state.posts.slice(updateIndex+1)
             ]
         },
-        removeMessageMutation(state, message) {
-            const deleteIndex = state.messages.findIndex(item => item.id === message.id)
+        removePostMutation(state, post) {
+            const deleteIndex = state.posts.findIndex(item => item.id === post.id)
             if (deleteIndex > -1) {
-                state.messages = [
-                    ...state.messages.slice(0, deleteIndex),
-                    ...state.messages.slice(deleteIndex+1)
+                state.posts = [
+                    ...state.posts.slice(0, deleteIndex),
+                    ...state.posts.slice(deleteIndex+1)
                 ]
             }
         },
         addCommentMutation(state, comment) {
-            const messageIndex = state.messages.findIndex(item => item.id === comment.message.id)
-            const message = state.messages[messageIndex]
+            const postIndex = state.posts.findIndex(item => item.id === comment.post.id)
+            const post = state.posts[postIndex]
 
-            if ((!message.comments) || (!message.comments.find(it => it.id === comment.id))) {
-                state.messages = [
-                    ...state.messages.slice(0, messageIndex),
+            if ((!post.comments) || (!post.comments.find(it => it.id === comment.id))) {
+                state.posts = [
+                    ...state.posts.slice(0, postIndex),
                     {
-                        ...message,
+                        ...post,
                         comments: [
-                            ...message.comments,
+                            ...post.comments,
                             comment
                         ]
                     },
-                    ...state.messages.slice(messageIndex + 1)
+                    ...state.posts.slice(postIndex + 1)
                 ]
             } else {
                 console.log('why')
@@ -62,14 +62,14 @@ export default new Vuex.Store({
 
 
         },
-        addMessagePageMutation (state, messages) {
-            const targetMessages = state.messages
-                .concat(messages)
+        addPostPageMutation (state, posts) {
+            const targetPosts = state.posts
+                .concat(posts)
                 .reduce((res, val) => {
                     res[val.id] = val
                     return res
                 }, {})
-            state.messages = Object.values(targetMessages)
+            state.posts = Object.values(targetPosts)
         },
         updateTotalPagesMutation (state, totalPages) {
             state.totalPages = totalPages
@@ -79,26 +79,26 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async addMessageAction({commit, state}, message) {
-            const result = await messagesApi.add(message)
+        async addPostAction({commit, state}, post) {
+            const result = await postsApi.add(post)
             const data = await result.json()
-            const index = state.messages.findIndex(item => item.id === data.id)
+            const index = state.posts.findIndex(item => item.id === data.id)
 
             if (index > -1) {
-                commit('updateMessageMutation', data)
+                commit('updatePostMutation', data)
             } else {
-                commit('addMessageMutation', data)
+                commit('addPostMutation', data)
             }
         },
-        async updateMessageAction({commit}, message) {
-            const result = await messagesApi.update(message)
+        async updatePostAction({commit}, post) {
+            const result = await postsApi.update(post)
             const data = await result.json()
-            commit('updateMessageMutation', data)
+            commit('updatePostMutation', data)
         },
-        async removeMessageAction({commit}, message) {
-            const result = await messagesApi.remove(message.id)
+        async removePostAction({commit}, post) {
+            const result = await postsApi.remove(post.id)
             if (result.ok) {
-                commit('removeMessageMutation', message)
+                commit('removePostMutation', post)
             }
         },
         async addCommentAction({commit, state}, comment) {
@@ -107,9 +107,9 @@ export default new Vuex.Store({
             commit('addCommentMutation', data)
         },
         async loadPageAction ({commit, state}) {
-            const response = await messagesApi.page(state.currentPage + 1)
+            const response = await postsApi.page(state.currentPage + 1)
             const data = await response.json()
-            commit('addMessagePageMutation', data.messages)
+            commit('addPostPageMutation', data.posts)
             commit('updateTotalPagesMutation', data.totalPages)
             commit('updateCurrentPageMutation', Math.min(data.currentPage, data.totalPages - 1))
         },

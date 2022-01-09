@@ -7,7 +7,7 @@
                 <v-divider v-if="index > 0" :key="index"></v-divider>
                 <comment-item :comment="item" :key="'item' + index"></comment-item>
             </template>
-            <comment-form :message-id="messageId"></comment-form>
+            <comment-form :post-id="postId"></comment-form>
         </v-list>
     </v-container>
 </template>
@@ -21,7 +21,7 @@
             CommentItem,
             CommentForm
         },
-        props: ['comments', 'messageId']
+        props: ['comments', 'postId']
     }
 </script>
 

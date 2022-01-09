@@ -4,11 +4,11 @@
       <div>Привет, {{profile.username}} </div>
     </v-flex>
     <v-layout align-space-around justify-start column>
-      <message-form :messageAttr="message" :redact="redact"/>
-      <message-row v-for="message in sortedMessages"
-                   :key="message.id"
-                   :message="message"
-                   :editMessage="editMessage"
+      <post-form :postAttr="post" :redact="redact"/>
+      <post-row v-for="post in sortedPosts"
+                   :key="post.id"
+                   :post="post"
+                   :editPost="editPost"
                    :redact="redact"/>
       <lazy-loader></lazy-loader>
     </v-layout>
@@ -17,29 +17,29 @@
 </template>
 
 <script>
-import MessageRow from 'components/messages/MessageRow.vue'
-import MessageForm from 'components/messages/MessageForm.vue'
+import PostRow from 'components/posts/PostRow.vue'
+import PostForm from 'components/posts/PostForm.vue'
 import {mapGetters, mapState} from 'vuex'
 import LazyLoader from "components/LazyLoader.vue";
 
 export default {
   components: {
     LazyLoader,
-    MessageRow, MessageForm
+    PostRow, PostForm
   },
   data() {
     return {
-      message: null,
+      post: null,
       isRedact: null,
     }
   },
   computed: {
     ...mapState(['profile', 'redact']),
-    ...mapGetters(['sortedMessages'])
+    ...mapGetters(['sortedPosts'])
   },
   methods: {
-    editMessage(message) {
-      this.message = message
+    editPost(post) {
+      this.post = post
     },
   }
 }

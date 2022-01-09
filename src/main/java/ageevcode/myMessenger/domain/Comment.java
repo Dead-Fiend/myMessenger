@@ -18,10 +18,10 @@ public class Comment {
     @JsonView(Views.IdName.class)
     private String text;
     @ManyToOne
-    @JoinColumn(name = "message_id")
+    @JoinColumn(name = "post_id")
     //@JsonView(Views.FullComment.class)
     @JsonView(Views.IdName.class)
-    private Message message;
+    private Post post;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     @JsonView(Views.IdName.class)
