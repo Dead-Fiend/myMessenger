@@ -30,6 +30,8 @@ public class User implements UserDetails, Serializable {
     private Long id;
     @JsonView(Views.IdName.class)
     private String username;
+    @JsonView(Views.WithoutPassword.class)
+    private String email;
     private String password;
     @JsonView(Views.WithoutPassword.class)
     private Boolean active;
