@@ -2,11 +2,20 @@ plugins {
 	id 'org.springframework.boot' version '2.6.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "com.github.node-gradle.node" version "3.1.1"
 }
 
 group = 'ageevcode'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+
+task buildFront(type: YarnTask) {
+	args = ['build']
+}
+
+yarn_install.dependsOn(yarn_cache_clean)
+buildFront.dependsOn(yarn_install)
+processResources.dependsOn(buildFront)
 
 repositories {
 	mavenCentral()

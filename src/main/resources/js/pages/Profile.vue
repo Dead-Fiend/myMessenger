@@ -37,8 +37,6 @@
               <span>{{profile.subscribers && profile.subscribers.length}}</span>
             </i>
           </v-flex>
-
-
         </v-layout>
         <v-btn v-if="!isMyProfile" @click="changeSubscription">{{isImSubscribed ? 'Отписаться' : 'Подписаться'}}</v-btn>
       </v-flex>
