@@ -31,9 +31,11 @@
         <v-icon v-if="$vuetify.theme.dark">nightlight_round</v-icon>
       </v-btn>
     </v-app-bar>
+
     <v-main class="mt-4">
       <router-view></router-view>
     </v-main>
+
     <v-footer flat height="50">
       <v-layout style="margin: auto" column>
         <v-flex></v-flex>
