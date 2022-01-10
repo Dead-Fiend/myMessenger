@@ -12,6 +12,7 @@ export default new Vuex.Store({
         profile,
         ...frontendData,
         redact: redact,
+        drkMode: drkMode,
     },
     getters: {
         sortedPosts: state => (state.posts || []).sort((a, b) => -(a.id - b.id)),

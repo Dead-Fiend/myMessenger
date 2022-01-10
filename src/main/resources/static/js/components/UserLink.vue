@@ -1,6 +1,6 @@
 <template>
   <router-link :to="`/user/${user.id}`" class="px-3">
-    <v-avatar color="indigo" :size="`${size || 36}px`" >
+    <v-avatar :size="`${size || 36}px`" >
       <v-icon>account_circle</v-icon>
     </v-avatar>
     <!--                <v-avatar color="indigo" v-if="!(user && user.avatar)" :size="`${size || 36}px`">

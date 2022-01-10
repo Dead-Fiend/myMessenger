@@ -2,7 +2,7 @@
     <v-card class="my-2">
         <v-card-text class="text--primary">
             <div>
-                <v-avatar color="indigo" size="36px">
+                <v-avatar size="36px">
                     <v-icon>account_circle</v-icon>
                 </v-avatar>
             </div>

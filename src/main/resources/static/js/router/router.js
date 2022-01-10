@@ -5,12 +5,14 @@ import Auth from 'pages/Auth.vue'
 import Profile from 'pages/Profile.vue'
 import Registration from 'pages/Registration.vue'
 import Admin from 'pages/Admin.vue'
+import Main from 'pages/Main.vue'
 import Subscriptions from "pages/Subscriptions.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/', component: PostsList},
+    {path: '/', component: Main},
+    {path: '/wall', component: PostsList},
     {path: '/auth', component: Auth},
     {path: '/reg', component: Registration},
     {path: '/user/:id?', component: Profile},

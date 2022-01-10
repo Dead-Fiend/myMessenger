@@ -7,7 +7,7 @@ import App from "pages/App.vue";
 import store from "store/store";
 import { connect } from "util/ws";
 import 'vuetify/dist/vuetify.min.css'
-
+import colors from 'vuetify/lib/util/colors'
 if (profile) {
     connect()
 }
