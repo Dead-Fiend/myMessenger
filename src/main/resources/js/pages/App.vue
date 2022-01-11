@@ -59,6 +59,7 @@
     import { addHandler } from "util/ws";
     import { mapState, mapMutations } from 'vuex'
 
+    window.localStorage.drk = "boot"
     export default {
       computed: {
         setTheme() {
@@ -81,11 +82,12 @@
               window.localStorage.drk = "true"
               this.drkMode.isDrk = true
               break;
+            case "boot":
+              this.drkMode.isDrk = false
             default:
               console.log("Error in local storage!")
               console.log(window.localStorage.drk)
               console.log(this.drkMode.isDrk)
-              window.localStorage.drk = "false"
               break
           }
         },
