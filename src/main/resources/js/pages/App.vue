@@ -83,12 +83,14 @@
               this.drkMode.isDrk = true
               break;
             case "boot":
+              window.localStorage.drk = "false"
               this.drkMode.isDrk = false
+              break;
             default:
               console.log("Error in local storage!")
               console.log(window.localStorage.drk)
               console.log(this.drkMode.isDrk)
-              break
+              break;
           }
         },
         ...mapMutations([
