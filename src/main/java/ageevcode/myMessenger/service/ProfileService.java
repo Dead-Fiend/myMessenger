@@ -67,7 +67,7 @@ public class ProfileService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
-        String usrnm = user.getUsername();;
+        String usrnm = user.getUsername();
         String passwd = user.getPassword();
 
         user.setActive(true);
