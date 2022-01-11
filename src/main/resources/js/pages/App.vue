@@ -81,10 +81,6 @@
               window.localStorage.drk = "true"
               this.drkMode.isDrk = true
               break;
-            case "boot":
-              window.localStorage.drk = "false"
-              this.drkMode.isDrk = false
-              break;
             default:
               console.log("Error in local storage!")
               console.log(window.localStorage.drk)
