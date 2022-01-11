@@ -91,11 +91,10 @@ public class htmlController {
     public String addUser(User user, HttpServletRequest request, Map<String, Object> model) throws ServletException {
         boolean result = profileService.addUser(user, request);
 
-        /*if (result) {
-            return "redirect:/";
+        if (result) {
+            return "redirect:/wall";
         } else {
             return "redirect:/reg";
-        }*/
-        return "redirect:/reg";
+        }
     }
 }
