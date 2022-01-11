@@ -41,9 +41,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.withType<Jar> {
+
+
+jar {
 	manifest {
-		attributes["Main-Class"] = "ageevcode.myMessenger.MyMessengerApplication"
+		attributes(
+				'Main-Class': 'ageevcode.myMessenger.MyMessengerApplication'
+		)
 	}
 }
 
