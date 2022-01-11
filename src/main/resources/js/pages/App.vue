@@ -85,6 +85,7 @@
               console.log("Error in local storage!")
               console.log(window.localStorage.drk)
               console.log(this.drkMode.isDrk)
+              window.localStorage.drk = "false"
               break
           }
         },
