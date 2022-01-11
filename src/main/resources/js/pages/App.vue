@@ -59,7 +59,7 @@
     import { addHandler } from "util/ws";
     import { mapState, mapMutations } from 'vuex'
 
-    window.localStorage.drk = "boot"
+    window.localStorage.drk
     export default {
       computed: {
         setTheme() {
