@@ -23,13 +23,14 @@ public class ProfileService implements UserDetailsService {
     private final UserRepo userRepo;
     private final UserSubscriptionRepo userSubscriptionRepo;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProfileService(UserRepo userRepo, UserSubscriptionRepo userSubscriptionRepo) {
+    public ProfileService(UserRepo userRepo, UserSubscriptionRepo userSubscriptionRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.userSubscriptionRepo = userSubscriptionRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
