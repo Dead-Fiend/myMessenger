@@ -62,7 +62,7 @@
     export default {
       computed: {
         setTheme() {
-          if ((this.drkMode.isDrk === true) || (window.localStorage.drk === "true")) {
+          if ((this.drkMode.isDrk === true) || (localStorage.drk === "true")) {
             return (this.$vuetify.theme.dark = true);
           } else {
             return (this.$vuetify.theme.dark = false);
@@ -72,18 +72,18 @@
       },
       methods: {
         changeTheme() {
-          switch (window.localStorage.drk) {
+          switch (localStorage.drk) {
             case "true":
-              window.localStorage.drk = "false"
+              localStorage.drk = "false"
               this.drkMode.isDrk = false
               break;
             case "false":
-              window.localStorage.drk = "true"
+              localStorage.drk = "true"
               this.drkMode.isDrk = true
               break;
             default:
               console.log("Error in local storage!")
-              console.log(window.localStorage.drk)
+              console.log(localStorage.drk)
               console.log(this.drkMode.isDrk)
               break;
           }
