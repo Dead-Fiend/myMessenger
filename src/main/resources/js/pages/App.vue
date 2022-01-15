@@ -59,10 +59,11 @@
     import { addHandler } from "util/ws";
     import { mapState, mapMutations } from 'vuex'
 
+    window.localStorage.drk
     export default {
       computed: {
         setTheme() {
-          if ((this.drkMode.isDrk === true) || (localStorage.drk === "true")) {
+          if ((this.drkMode.isDrk === true) || (window.localStorage.drk === "true")) {
             return (this.$vuetify.theme.dark = true);
           } else {
             return (this.$vuetify.theme.dark = false);
@@ -72,18 +73,18 @@
       },
       methods: {
         changeTheme() {
-          switch (localStorage.drk) {
+          switch (window.localStorage.drk) {
             case "true":
-              localStorage.drk = "false"
+              window.localStorage.drk = "false"
               this.drkMode.isDrk = false
               break;
             case "false":
-              localStorage.drk = "true"
+              window.localStorage.drk = "true"
               this.drkMode.isDrk = true
               break;
             default:
               console.log("Error in local storage!")
-              console.log(localStorage.drk)
+              console.log(window.localStorage.drk)
               console.log(this.drkMode.isDrk)
               break;
           }
