@@ -19,6 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ProfileService userService;
 
+    @Autowired
     public WebSecurityConfig(PasswordEncoder passwordEncoder, ProfileService userService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
