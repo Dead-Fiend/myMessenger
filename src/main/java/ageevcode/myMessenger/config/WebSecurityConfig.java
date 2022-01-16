@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().hasAnyAuthority("USER", "ADMIN")
                 .and()
                 .formLogin()
-                .loginPage("/auth")
+                .loginPage("/auth").defaultSuccessUrl("/wall")
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/auth").permitAll()
