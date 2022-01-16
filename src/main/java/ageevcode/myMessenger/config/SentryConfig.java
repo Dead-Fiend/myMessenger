@@ -1,3 +1,4 @@
+/*
 package ageevcode.myMessenger.config;
 
 import io.sentry.spring.EnableSentry;
@@ -8,3 +9,4 @@ import org.springframework.context.annotation.Configuration;
 
 public class SentryConfig {
 }
+*/
