@@ -6,7 +6,6 @@ import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.dto.PostPageDto;
 import ageevcode.myMessenger.service.PostService;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.sentry.Sentry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,7 +28,6 @@ public class PostController {
     @GetMapping
     @JsonView(Views.FullPost.class)
     public PostPageDto list(@PageableDefault(size = POSTS_PER_PAGE, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
-        Sentry.captureMessage("Application started");
         return postService.findForUser(pageable, user);
     }
 
