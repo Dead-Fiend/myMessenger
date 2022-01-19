@@ -9,10 +9,10 @@
         var frontendData = [[${frontendData}]];
         var posts = JSON.parse([[${posts}]]);
         var profile = JSON.parse([[${profile}]]);
+        var messages = JSON.parse([[${messages}]]);
         var redact = {isRedact: null};
         var drkMode = {isDrk: null};
-        var userList = [[${userList}]]
-
+        var userList = [[${userList}]];
         if (window.localStorage.drk === undefined) {
             window.localStorage.drk = "false"
         }

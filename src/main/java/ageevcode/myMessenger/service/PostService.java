@@ -74,6 +74,7 @@ public class PostService {
 
         Page<Post> page = postRepo.findByAuthorIn(channels, pageable);
 
+
         return new PostPageDto(
                 page.getContent(),
                 pageable.getPageNumber(),

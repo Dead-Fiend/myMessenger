@@ -10,6 +10,7 @@ export default new Vuex.Store({
     state: {
         posts,
         profile,
+        messages,
         ...frontendData,
         redact: redact,
         drkMode: drkMode,

@@ -1,9 +1,11 @@
 package ageevcode.myMessenger.controller;
 
+import ageevcode.myMessenger.domain.Message;
 import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.dto.PostPageDto;
 import ageevcode.myMessenger.repo.UserRepo;
+import ageevcode.myMessenger.service.MessageService;
 import ageevcode.myMessenger.service.PostService;
 import ageevcode.myMessenger.service.ProfileService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static ageevcode.myMessenger.controller.MessageController.MESSAGES_PER_PAGE;
 import static ageevcode.myMessenger.controller.PostController.POSTS_PER_PAGE;
 
 @Controller
@@ -32,19 +36,24 @@ import static ageevcode.myMessenger.controller.PostController.POSTS_PER_PAGE;
 public class htmlController {
     private final PostService postService;
     private final UserRepo userRepo;
+    private final ObjectWriter postWriter;
     private final ObjectWriter messageWriter;
     private final ObjectWriter profileWriter;
     private final ProfileService profileService;
+    private final MessageService messageService;
 
     @Autowired
-    public htmlController(PostService postService, UserRepo userRepo, ObjectMapper mapper, ProfileService profileService) {
+    public htmlController(PostService postService, UserRepo userRepo, ObjectMapper mapper, ProfileService profileService, MessageService messageService) {
         this.postService = postService;
         this.userRepo = userRepo;
         this.profileService = profileService;
+        this.messageService = messageService;
         ObjectMapper objectMapper = mapper
                 .setConfig(mapper.getSerializationConfig());
-        messageWriter = objectMapper
+        postWriter = objectMapper
                 .writerWithView(Views.FullPost.class);
+        messageWriter = objectMapper
+                .writerWithView(Views.FullMessage.class);
         profileWriter = objectMapper
                 .writerWithView(Views.WithoutPassword.class);
 
@@ -64,12 +73,20 @@ public class htmlController {
             model.addAttribute("profile", serializedProfile);
 
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
-            PageRequest pageRequest = PageRequest.of(0, POSTS_PER_PAGE, sort);
-            PostPageDto postPageDto = postService.findForUser(pageRequest, user);
+            PageRequest postsPageRequest = PageRequest.of(0, POSTS_PER_PAGE, sort);
+            PostPageDto postPageDto = postService.findForUser(postsPageRequest, user);
 
-            String posts = messageWriter.writeValueAsString(postPageDto.getPosts());
+            String posts = postWriter.writeValueAsString(postPageDto.getPosts());
 
             model.addAttribute("posts", posts);
+
+            PageRequest messagesPageRequest = PageRequest.of(0, MESSAGES_PER_PAGE);
+//            MessagePageDto messagePageDto = messageService.findAll(messagesPageRequest, user);
+            List<Message> messageList = messageService.findAll(messagesPageRequest, user);
+
+            String messages = messageWriter.writeValueAsString(messageList);
+
+            model.addAttribute("messages", messages);
 
             data.put("currentPage", postPageDto.getCurrentPage());
             data.put("totalPages", postPageDto.getTotalPages());
