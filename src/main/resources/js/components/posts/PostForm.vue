@@ -13,7 +13,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import * as Sentry from "@sentry/vue";
 
 export default {
   props: ['postAttr', 'redact'],

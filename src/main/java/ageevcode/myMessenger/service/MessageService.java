@@ -3,6 +3,7 @@ package ageevcode.myMessenger.service;
 import ageevcode.myMessenger.domain.Message;
 import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.UserChat;
+import ageevcode.myMessenger.dto.EventType;
 import ageevcode.myMessenger.dto.MessagePageDto;
 import ageevcode.myMessenger.repo.MessageRepo;
 import ageevcode.myMessenger.repo.UserChatRepo;
@@ -70,4 +71,18 @@ public class MessageService {
         return messageRepo.save(message);
     }
 
+    public Message update(Message messageFromDB, Message message) {
+        messageFromDB.setUpdatedAt(LocalDateTime.now());
+        messageFromDB.setText(message.getText());
+        Message updatedMessage = messageRepo.save(messageFromDB);
+
+//        wsSender.accept(EventType.UPDATE, updatedMessage);
+
+        return updatedMessage;
+    }
+
+    public void delete(Message message) {
+        messageRepo.delete(message);
+//        wsSender.accept(EventType.REMOVE, message);
+    }
 }

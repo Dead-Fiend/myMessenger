@@ -18,27 +18,27 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
-    import CommentList from 'components/comment/CommentList.vue'
-    import UserLink from "components/UserLink.vue";
+import { mapActions } from 'vuex'
+import CommentList from 'components/comment/CommentList.vue'
+import UserLink from "components/UserLink.vue";
 
-    export default {
-      name: "PostRow",
-        components: {
-          UserLink,
-            CommentList
-        },
-        props: ['post', 'editPost', 'redact'],
-        methods: {
-            ...mapActions(['removePostAction']),
-            edit() {
-                this.editPost(this.post)
-            },
-            del() {
-                this.removePostAction(this.post)
-            },
-        }
-    }
+export default {
+  name: "PostRow",
+  components: {
+    UserLink,
+    CommentList
+  },
+  props: ['post', 'editPost', 'redact'],
+  methods: {
+    ...mapActions(['removePostAction']),
+    edit() {
+      this.editPost(this.post)
+    },
+    del() {
+      this.removePostAction(this.post)
+    },
+  }
+}
 </script>
 
 <style>

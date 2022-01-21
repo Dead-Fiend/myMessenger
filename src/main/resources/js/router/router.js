@@ -7,11 +7,13 @@ import Registration from 'pages/Registration.vue'
 import Admin from 'pages/Admin.vue'
 import Main from 'pages/Main.vue'
 import Subscriptions from "pages/Subscriptions.vue";
+import Messenger from "pages/Messenger.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
     {path: '/', component: Main},
+    {path: '/mssgs/:id?', component: Messenger},
     {path: '/wall', component: PostsList},
     {path: '/auth', component: Auth},
     {path: '/reg', component: Registration},

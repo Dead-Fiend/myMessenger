@@ -1,22 +1,91 @@
 import Vue from "vue";
 import Vuex from 'vuex';
 import postsApi from "api/posts";
+import messagesApi from "api/messages";
 import commentApi from "api/comment";
 
+function removeDuplicates(arr) {
+
+    const result = [];
+    const duplicatesIndices = [];
+
+    // Перебираем каждый элемент в исходном массиве
+    arr.forEach((current, index) => {
+
+        if (duplicatesIndices.includes(index)) return;
+
+        result.push(current);
+
+        // Сравниваем каждый элемент в массиве после текущего
+        for (let comparisonIndex = index + 1; comparisonIndex < arr.length; comparisonIndex++) {
+
+            const comparison = arr[comparisonIndex];
+            const currentKeys = Object.keys(current);
+            const comparisonKeys = Object.keys(comparison);
+
+            // Проверяем длину массивов
+            if (currentKeys.length !== comparisonKeys.length) continue;
+
+            // Проверяем значение ключей
+            const currentKeysString = currentKeys.sort().join("").toLowerCase();
+            const comparisonKeysString = comparisonKeys.sort().join("").toLowerCase();
+            if (currentKeysString !== comparisonKeysString) continue;
+
+            // Проверяем индексы ключей
+            let valuesEqual = true;
+            for (let i = 0; i < currentKeys.length; i++) {
+                const key = currentKeys[i];
+                if ( current[key] !== comparison[key] ) {
+                    valuesEqual = false;
+                    break;
+                }
+            }
+            if (valuesEqual) duplicatesIndices.push(comparisonIndex);
+
+        } // Конец цикла
+    });
+    return result;
+}
 
 Vue.use(Vuex)
+
+
+
 
 export default new Vuex.Store({
     state: {
         posts,
         profile,
         messages,
+        messagesToChat,
         ...frontendData,
         redact: redact,
         drkMode: drkMode,
     },
     getters: {
         sortedPosts: state => (state.posts || []).sort((a, b) => -(a.id - b.id)),
+        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id)),
+        chats: state => {
+            let mssgs = (state.messages || [])
+            mssgs.forEach(function (currentValue, index, array) {
+/*                delete currentValue.createdAt
+                delete currentValue.updatedAt
+                delete currentValue.id
+                delete currentValue.text
+                delete currentValue.author*/
+                let {interlocutor, ...newObj} = currentValue
+
+                state.messagesToChat[index] = interlocutor
+            });
+            (state.messagesToChat || []).forEach(function (currentValue, index, array) {
+                if (currentValue.id == state.profile.id) {
+                    delete state.messagesToChat[index]
+                }
+            });
+            // console.log(removeDuplicates(state.messagesToChat))
+            state.messagesToChat = state.messagesToChat.filter((thing, index, self) => self.findIndex(t => t.id === thing.id && t.username === thing.username) === index)
+            return state.messagesToChat;
+        }
     },
     mutations: {
         addPostMutation(state, post) {
@@ -39,6 +108,29 @@ export default new Vuex.Store({
                 state.posts = [
                     ...state.posts.slice(0, deleteIndex),
                     ...state.posts.slice(deleteIndex+1)
+                ]
+            }
+        },
+        addMessageMutation(state, message) {
+            state.messages = [
+                ...state.messages,
+                message
+            ]
+        },
+        updateMessageMutation(state, message) {
+            const updateIndex = state.messages.findIndex(item => item.id === message.id)
+            state.messages = [
+                ...state.messages.slice(0, updateIndex),
+                message,
+                ...state.messages.slice(updateIndex+1)
+            ]
+        },
+        removeMessageMutation(state, message) {
+            const deleteIndex = state.messages.findIndex(item => item.id === message.id)
+            if (deleteIndex > -1) {
+                state.messages = [
+                    ...state.messages.slice(0, deleteIndex),
+                    ...state.messages.slice(deleteIndex+1)
                 ]
             }
         },
@@ -103,6 +195,29 @@ export default new Vuex.Store({
                 commit('removePostMutation', post)
             }
         },
+        async addMessageAction({commit, state}, message) {
+            const result = await messagesApi.add(message)
+            const data = await result.json()
+            const index = state.messages.findIndex(item => item.id === data.id)
+
+            if (index > -1) {
+                commit('updateMessageMutation', data)
+            } else {
+                commit('addMessageMutation', data)
+            }
+        },
+        async updateMessageAction({commit}, message) {
+            const result = await messagesApi.update(message)
+            const data = await result.json()
+            commit('updateMessageMutation', data)
+        },
+        async removeMessageAction({commit}, message) {
+            const result = await messagesApi.remove(message.id)
+            if (result.ok) {
+                commit('removeMessageMutation', message)
+            }
+        },
+
         async addCommentAction({commit, state}, comment) {
             const response = await commentApi.add(comment)
             const data = await response.json()
