@@ -9,7 +9,7 @@
                 :chat="chat"
       ></chat-row>
     </v-flex>
-    <v-flex>
+    <v-flex v-if="(this.$route.params.id) !== undefined">
       <v-layout align-space-around justify-start column>
         <message-form :messageAttr="message" :redact="redact"/>
         <message-row v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
