@@ -4,53 +4,7 @@ import postsApi from "api/posts";
 import messagesApi from "api/messages";
 import commentApi from "api/comment";
 
-function removeDuplicates(arr) {
-
-    const result = [];
-    const duplicatesIndices = [];
-
-    // Перебираем каждый элемент в исходном массиве
-    arr.forEach((current, index) => {
-
-        if (duplicatesIndices.includes(index)) return;
-
-        result.push(current);
-
-        // Сравниваем каждый элемент в массиве после текущего
-        for (let comparisonIndex = index + 1; comparisonIndex < arr.length; comparisonIndex++) {
-
-            const comparison = arr[comparisonIndex];
-            const currentKeys = Object.keys(current);
-            const comparisonKeys = Object.keys(comparison);
-
-            // Проверяем длину массивов
-            if (currentKeys.length !== comparisonKeys.length) continue;
-
-            // Проверяем значение ключей
-            const currentKeysString = currentKeys.sort().join("").toLowerCase();
-            const comparisonKeysString = comparisonKeys.sort().join("").toLowerCase();
-            if (currentKeysString !== comparisonKeysString) continue;
-
-            // Проверяем индексы ключей
-            let valuesEqual = true;
-            for (let i = 0; i < currentKeys.length; i++) {
-                const key = currentKeys[i];
-                if ( current[key] !== comparison[key] ) {
-                    valuesEqual = false;
-                    break;
-                }
-            }
-            if (valuesEqual) duplicatesIndices.push(comparisonIndex);
-
-        } // Конец цикла
-    });
-    return result;
-}
-
 Vue.use(Vuex)
-
-
-
 
 export default new Vuex.Store({
     state: {
@@ -67,22 +21,23 @@ export default new Vuex.Store({
         sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id)),
         chats: state => {
             let mssgs = (state.messages || [])
-            mssgs.forEach(function (currentValue, index, array) {
-/*                delete currentValue.createdAt
-                delete currentValue.updatedAt
-                delete currentValue.id
-                delete currentValue.text
-                delete currentValue.author*/
-                let {interlocutor, ...newObj} = currentValue
 
-                state.messagesToChat[index] = interlocutor
+            mssgs.forEach(function (currentValue, index, array) {
+                let {interlocutor, ...newObj} = currentValue
+                state.messagesToChat[state.messagesToChat.length] = interlocutor
             });
+            mssgs.forEach(function (currentValue, index, array) {
+                let {author, ...newObj} = currentValue
+                state.messagesToChat[state.messagesToChat.length] = author
+            });
+
             (state.messagesToChat || []).forEach(function (currentValue, index, array) {
                 if (currentValue.id == state.profile.id) {
                     delete state.messagesToChat[index]
                 }
             });
-            // console.log(removeDuplicates(state.messagesToChat))
+
+            state.messagesToChat = state.messagesToChat.filter((n) => n != null);
             state.messagesToChat = state.messagesToChat.filter((thing, index, self) => self.findIndex(t => t.id === thing.id && t.username === thing.username) === index)
             return state.messagesToChat;
         }
