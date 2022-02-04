@@ -19,6 +19,9 @@
             <v-btn icon href="/user">
                 <v-icon>account_circle</v-icon>
             </v-btn>
+            <v-btn icon href="/mssgs">
+                <v-icon>chat</v-icon>
+            </v-btn>
             <v-btn icon href="/logout">
                 <v-icon>logout</v-icon>
             </v-btn>
