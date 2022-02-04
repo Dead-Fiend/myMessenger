@@ -3,7 +3,7 @@
     <v-layout column justify-space-around>
       <v-flex></v-flex>
       <v-flex>
-        <v-layout raw justify-space-around>
+        <v-layout row justify-space-around>
           <v-flex></v-flex>
           <v-flex fill-height>
             <v-layout column justify-space-around>
@@ -111,7 +111,7 @@ export default {
         value => (value || '').length <= 50 || 'Максимум 50 символов',
         value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
+          return pattern.test(value) || 'Некорректный e-mail.'
         },
       ]
     }
