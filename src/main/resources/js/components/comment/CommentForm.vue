@@ -29,8 +29,8 @@ export default {
     return {
       text: '',
       rules: [
-        value => !!value || 'Обязательное поле',
-        value => (value || '').length <= 250 || 'Максимум 250 символов',
+        value => !!value || 'Минимум 1 символ',
+        value => (value || '').length <= 300 || 'Максимум 300 символов',
       ]
     }
   },
