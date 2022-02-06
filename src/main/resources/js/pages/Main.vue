@@ -65,7 +65,7 @@
                           name="password"
 
                           label="Пароль"
-                          @keyup.enter="submit"
+                          @keyup.enter="validate"
                           required loading
                       >
                         <template v-slot:progress>
