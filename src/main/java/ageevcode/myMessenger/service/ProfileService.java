@@ -76,15 +76,13 @@ public class ProfileService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        System.out.println(user.getUsername());
-
-        Set<Role> roles = new HashSet<>();
+/*        Set<Role> roles = new HashSet<>();
         roles.add(Role.ADMIN);
         roles.add(Role.USER);
 
-        if (user.getUsername().equals("R00t")) {
+        if (user.getUsername().equals("")) {
             user.setRoles(roles);
-        }
+        }*/
 
         userRepo.save(user);
 
