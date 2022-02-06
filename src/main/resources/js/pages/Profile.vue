@@ -9,7 +9,7 @@
           <v-flex>
             <span>Ваш уровень доступа:</span>
             <i>
-              <span>{{profile.roles}}</span>
+              <span>{{profile.roles.toString()}}</span>
             </i>
           </v-flex>
           <v-flex>
