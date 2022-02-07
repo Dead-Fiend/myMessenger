@@ -5,8 +5,7 @@
     <v-btn class="ma-2" @click="save" style="color: darkslategray" icon><v-icon class="material-icons-round">send</v-icon></v-btn>
   </v-layout>-->
   <v-form ref="form" @submit.prevent="validate">
-<!--    <v-layout row class="px-3">-->
-    <v-layout row>
+    <v-layout row class="px-3">
       <v-text-field
           v-if="!isRedact"
           label="Новое сообщение"
