@@ -4,20 +4,20 @@
         <v-flex></v-flex>
         <v-flex>
           <v-layout row justify-space-around>
-            <v-flex class="ml-10">
+            <v-flex class="mx-5" style="margin-bottom: 10px">
               <v-card max-width="750">
                 <v-card-text style="font-size: 17px">
                   InKontakte - это "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex class="mr-10">
+            <v-flex class="mx-5">
               <v-layout column justify-space-around>
                 <v-flex>
-                  <v-card class="px-2" style="margin: auto" max-width="500">
+                  <v-card class="px-2" style="margin: auto" max-width="750">
                     <v-card-title>Регистрация</v-card-title>
                     <v-form
-                        max-width="350px"
+                        max-width="550px"
                         action="/registration"
                         method="post"
                         justify="center"

@@ -104,6 +104,7 @@ public class htmlController {
     public String registration() {
         return "registration";
     }
+
     @PostMapping("registration")
     public String addUser(User user, HttpServletRequest request, Map<String, Object> model) throws ServletException {
         boolean result = profileService.addUser(user, request);
