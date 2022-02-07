@@ -6,7 +6,7 @@
   </v-layout>-->
 
   <v-form ref="form" @submit.prevent="validate">
-    <v-layout row class="px-3">
+    <v-layout row class="px-3" style="margin-bottom: 2px">
       <v-text-field
           v-if="!isRedact"
           label="Новый пост"
