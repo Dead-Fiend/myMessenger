@@ -6,6 +6,18 @@ module.exports = {
 
     module: {
         rules: [
+            // изображения
+/*            {
+                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                type: 'asset/resource',
+            },*/
+            // шрифты и SVG
+            {
+                test: /\.(svg)$/,
+                use: {
+                    loader: "svg-inline-loader"
+                },
+            },
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
