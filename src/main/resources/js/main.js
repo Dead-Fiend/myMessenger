@@ -11,10 +11,6 @@ import colors from 'vuetify/lib/util/colors'
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 
-import dots from 'assets/dots.svg';
-import group from 'assets/group.svg';
-import ellipse from 'assets/ellipse.svg';
-
 Sentry.init({
     Vue,
     dsn: "https://adcfcdd1e4d245cdbcf06c62a4c839f1@o1112425.ingest.sentry.io/6142022",
