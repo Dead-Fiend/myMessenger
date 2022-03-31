@@ -12,7 +12,12 @@
       <v-flex v-if="(this.$route.params.id) !== undefined">
         <v-layout align-space-around justify-start column>
           <message-form :messageAttr="message" :redact="redact"/>
-          <message-row class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
+<!--          <message-row class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
+                       :key="message.id"
+                       :message="message"
+                       :editMessage="editMessage"
+                       :redact="redact"/>-->
+          <message-u-p-d class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
                        :key="message.id"
                        :message="message"
                        :editMessage="editMessage"
@@ -25,13 +30,14 @@
 <script>
 import MessageForm from "components/messages/MessageForm.vue";
 import MessageRow from "components/messages/MessageRow.vue";
+import MessageUPD from "components/messages/MessageUPD.vue";
 import ChatRow from "components/messages/ChatRow.vue";
 import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "Messenger",
   components: {
-    MessageRow,
+    MessageRow, MessageUPD,
     ChatRow,
     MessageForm,
   },

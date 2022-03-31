@@ -1,7 +1,7 @@
 <template>
   <div class="my-2">
       <div class="postwithoutpic-postwithoutpic232">
-        <div class="postwithoutpic-header234">
+        <div class="postwithoutpic-header234" v-if="!isDefault">
           <div class="postwithoutpic-header235">
             <div class="postwithoutpic-group236">
               <div class="postwithoutpic-avatar237">
@@ -34,7 +34,7 @@
                 </div>
               </div>
             </div>
-            <v-menu top offset-x offset-y>
+            <v-menu top offset-x offset- v-if="!isDefault">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     class="postwithoutpic-svg1"
@@ -59,27 +59,35 @@
             </v-menu>
           </div>
         </div>
-        <span class="postwithoutpic-text6">
-        <span class="postwithoutpic-text7">
-          {{post.text}}
+        <span class="postwithoutpic-text6" v-if="isDefault" style="text-align: center">
+          <span class="postwithoutpic-text7">
+            Добрый день, {{profile.username}}
+          </span>
         </span>
-      </span>
+        <span class="postwithoutpic-text6" v-if="!isDefault">
+          <span class="postwithoutpic-text7">
+            {{post.text}}
+          </span>
+        </span>
       </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 import CommentList from 'components/comment/CommentList.vue'
 import UserLink from "components/UserLink.vue";
 
 export default {
-  name: "Post[2.0]",
+  name: "PostUPD",
   components: {
     UserLink,
     CommentList
   },
-  props: ['post', 'editPost', 'redact'],
+  computed: {
+    ...mapState(['profile']),
+  },
+  props: ['post', 'editPost', 'redact', 'isDefault'],
   methods: {
     ...mapActions(['removePostAction']),
     edit() {
@@ -161,7 +169,7 @@ export default {
   font-size: 9px;
   align-self: auto;
   font-style: normal;
-  text-align: left;
+
   font-family: Abril Fatface;
   font-weight: 400px;
   line-height: normal;
@@ -172,8 +180,7 @@ export default {
   color: rgba(255, 255, 255, 1);
   height: auto;
   align-self: auto;
-  font-style: normal;
-  text-align: left;
+
   font-weight: 400px;
   font-stretch: normal;
   text-decoration: none;
@@ -212,7 +219,6 @@ export default {
   font-size: 12px;
   align-self: auto;
   font-style: normal;
-  text-align: left;
   font-family: Roboto;
   font-weight: 400px;
   line-height: normal;
@@ -225,7 +231,7 @@ export default {
   height: auto;
   align-self: auto;
   font-style: normal;
-  text-align: left;
+
   font-weight: 400px;
   font-stretch: normal;
   text-decoration: none;
@@ -255,7 +261,7 @@ export default {
   color: rgba(255, 255, 255, 1);
   align-self: auto;
   font-style: normal;
-  text-align: left;
+
   font-weight: 700px;
   font-stretch: normal;
   text-decoration: none;
@@ -325,7 +331,7 @@ export default {
   font-size: 14px;
   align-self: auto;
   font-style: normal;
-  text-align: left;
+
   font-family: Roboto;
   font-weight: 400px;
   line-height: 22px;
@@ -338,7 +344,7 @@ export default {
   height: auto;
   align-self: auto;
   font-style: normal;
-  text-align: left;
+
   font-weight: 400px;
   font-stretch: normal;
   text-decoration: none;

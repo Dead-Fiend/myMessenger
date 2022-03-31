@@ -36,7 +36,7 @@
 import {mapActions} from "vuex";
 
 export default {
-  name: "PostForm[2.0]",
+  name: "PostFormUPD",
   props: ['postAttr', 'redact'],
   data() {
     return {
