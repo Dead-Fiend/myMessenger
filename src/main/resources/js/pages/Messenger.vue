@@ -11,7 +11,6 @@
       </v-flex>
       <v-flex v-if="(this.$route.params.id) !== undefined">
         <v-layout align-space-around justify-start column>
-          <message-form :messageAttr="message" :redact="redact"/>
 <!--          <message-row class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
                        :key="message.id"
                        :message="message"
@@ -22,6 +21,7 @@
                        :message="message"
                        :editMessage="editMessage"
                        :redact="redact"/>
+          <message-form :messageAttr="message" :redact="redact" class="mt-5 arrow"/>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -61,5 +61,12 @@ export default {
 </script>
 
 <style scoped>
-
+.arrow {
+  position: fixed;
+  bottom: 0;
+  /* Центрирование */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
 </style>

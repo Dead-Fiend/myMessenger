@@ -4,32 +4,35 @@
     <v-text-field v-if="!isRedact" label="Новое сообщение" placeholder="Напишите что-нибудь" v-model="text" @keyup.enter="save" />
     <v-btn class="ma-2" @click="save" style="color: darkslategray" icon><v-icon class="material-icons-round">send</v-icon></v-btn>
   </v-layout>-->
-  <v-form ref="form" @submit.prevent="validate">
-    <v-layout row class="px-3">
-      <v-text-field
-          v-if="!isRedact"
-          label="Новое сообщение"
-          placeholder="Напишите что-нибудь"
-          v-model="text"
-          :rules="rules"
-          :type="'text'"
-          required
-      >
-      </v-text-field>
-      <v-text-field
-          v-if="isRedact"
-          label="Редактировать сообщение"
-          placeholder="Напишите что-нибудь"
-          v-model="text"
-          :rules="rules"
-          :type="'text'"
-          required
-      >
-      </v-text-field>
+  <v-list>
+    <v-form ref="form" @submit.prevent="validate">
+      <v-layout row class="px-3 ml-3" style="margin-bottom: 0.001em; margin-top: 0.001em">
+        <v-text-field
+            v-if="!isRedact"
+            label="Новое сообщение"
+            placeholder="Напишите что-нибудь"
+            v-model="text"
+            :rules="rules"
+            :type="'text'"
+            required
+        >
+        </v-text-field>
+        <v-text-field
+            v-if="isRedact"
+            label="Редактировать сообщение"
+            placeholder="Напишите что-нибудь"
+            v-model="text"
+            :rules="rules"
+            :type="'text'"
+            required
+        >
+        </v-text-field>
 
-      <v-btn class="ma-2" type="submit" style="color: darkslategray" icon><v-icon>send</v-icon></v-btn>
-    </v-layout>
-  </v-form>
+        <v-btn class="ma-2" type="submit" style="color: darkslategray" icon><v-icon>send</v-icon></v-btn>
+      </v-layout>
+    </v-form>
+  </v-list>
+
 </template>
 
 <script>

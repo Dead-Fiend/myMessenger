@@ -38,7 +38,7 @@
     <v-main class="mt-4">
       <router-view></router-view>
     </v-main>
-
+<!--
     <v-footer flat height="50">
       <v-layout style="margin: auto" column>
         <v-flex></v-flex>
@@ -54,7 +54,7 @@
 
         <v-flex></v-flex>
       </v-layout>
-    </v-footer>
+    </v-footer>-->
   </v-app>
 </template>
 

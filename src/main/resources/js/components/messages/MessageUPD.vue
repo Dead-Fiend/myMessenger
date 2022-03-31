@@ -1,5 +1,4 @@
 <template>
-<!-- {{message.text}}{{message.createdAt.slice(0, 10)}} -->
   <div class="frame826385-frame826385">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
@@ -8,7 +7,7 @@
     </div>
     <div class="frame826385-group820398">
         <span class="frame826385-text2">
-          <span class="frame826385-text3">12:12</span>
+          <span class="frame826385-text3">{{ message.createdAt.slice(11, 16) }}</span>
         </span>
     </div>
   </div>
@@ -52,7 +51,7 @@ export default {
   border-color: transparent;
   border-radius: 10px;
   flex-direction: column;
-  background-color: rgba(22, 24, 27, 1);
+  background-color: rgba(39,39,39, 0.8);
 }
 .frame826385-group821399 {
   width: 19px;
