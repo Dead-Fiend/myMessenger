@@ -1,5 +1,6 @@
 <template>
-  <div class="frame826385-frame826385">
+  <div>
+  <div class="frame826385-frame826385" v-if="!(profile.id == message.author.id)">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
           <span class="frame826385-text1">{{message.text}}</span>
@@ -10,6 +11,19 @@
           <span class="frame826385-text3">{{ message.createdAt.slice(11, 16) }}</span>
         </span>
     </div>
+  </div>
+  <div class="frame826385-frame826385 ml-auto" v-if="profile.id == message.author.id">
+    <div class="frame826385-group821399">
+        <span class="frame826385-text">
+          <span class="frame826385-text1">{{message.text}}</span>
+        </span>
+    </div>
+    <div class="frame826385-group820398">
+        <span class="frame826385-text2">
+          <span class="frame826385-text3">{{ message.createdAt.slice(11, 16) }}</span>
+        </span>
+    </div>
+  </div>
   </div>
 </template>
 

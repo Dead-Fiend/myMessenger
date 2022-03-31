@@ -1,8 +1,5 @@
 <template>
     <v-layout column class="mx-8">
-      <v-flex class="title mb-3">
-        <div>Привет, {{profile.username}} </div><div>{{chat}}</div>
-      </v-flex>
       <v-flex v-if="(this.$route.params.id) === undefined">
         <chat-row v-for="chat in chats"
                   :key="chat.id"
@@ -22,7 +19,8 @@
                        :editMessage="editMessage"
                        :redact="redact"/>
           <message-form :messageAttr="message" :redact="redact" class="mt-5 arrow"/>
-        </v-layout>
+          <p> </p><p> </p><p> </p><p> </p><p> </p><p> </p>
+          </v-layout>
       </v-flex>
     </v-layout>
 </template>
