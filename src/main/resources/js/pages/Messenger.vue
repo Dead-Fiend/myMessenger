@@ -8,19 +8,23 @@
       </v-flex>
       <v-flex v-if="(this.$route.params.id) !== undefined">
         <v-layout align-space-around justify-start column>
-<!--          <message-row class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
-                       :key="message.id"
-                       :message="message"
-                       :editMessage="editMessage"
-                       :redact="redact"/>-->
-          <message-u-p-d class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
-                       :key="message.id"
-                       :message="message"
-                       :editMessage="editMessage"
-                       :redact="redact"/>
-          <message-form :messageAttr="message" :redact="redact" class="mt-5 arrow"/>
-          <p> </p><p> </p><p> </p><p> </p><p> </p><p> </p>
-          </v-layout>
+
+          <!--          <message-row class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id)))"
+                                 :key="message.id"
+                                 :message="message"
+                                 :editMessage="editMessage"
+                                 :redact="redact"/>-->
+
+          <message-u-p-d class="my-2" v-for="message in (sortedMessages.filter(n => n.interlocutor.id == this.$route.params.id).concat(sortedMessages.filter(n => n.author.id == this.$route.params.id))).sort((a, b) => -(b.id - a.id))"
+                         :key="message.id"
+                         :message="message"
+                         :editMessage="editMessage"
+                         :redact="redact"/>
+          <message-form :messageAttr="message" :redact="redact" class="mt-5 txtform"/>
+<!--          <div style="height: 1px;" id="up"></div>-->
+<!--          <p> </p><p> </p><p> </p><p> </p><p> </p><p id="end" ref="scrollToMe"> </p>-->
+          <div id="end" style="height: 86px" class="mt-3">gg</div>
+        </v-layout>
       </v-flex>
     </v-layout>
 </template>
@@ -54,12 +58,23 @@ export default {
     editMessage(message) {
       this.message = message
     },
+    scrollToElement() {
+      const el = this.$refs.scrollToMe;
+
+      if (el) {
+        // Use el.scrollIntoView() to instantly scroll to the element
+        el.scrollIntoView({behavior: 'smooth'});
+      }
+    }
   },
+  mounted() {
+    this.scrollToElement();
+  }
 }
 </script>
 
 <style scoped>
-.arrow {
+.txtform {
   position: fixed;
   bottom: 0;
   /* Центрирование */

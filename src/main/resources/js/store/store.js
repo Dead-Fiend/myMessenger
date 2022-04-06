@@ -18,7 +18,7 @@ export default new Vuex.Store({
     },
     getters: {
         sortedPosts: state => (state.posts || []).sort((a, b) => -(a.id - b.id)),
-        sortedMessages: state => (state.messages || []).sort((a, b) => -(a.id - b.id)),
+        sortedMessages: state => (state.messages || []).sort((a, b) => -(b.id - a.id)),
         chats: state => {
             let mssgs = (state.messages || [])
 

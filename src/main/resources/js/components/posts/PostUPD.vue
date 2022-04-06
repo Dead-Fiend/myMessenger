@@ -96,7 +96,7 @@ export default {
     del() {
       this.removePostAction(this.post)
     },
-  }
+  },
 }
 </script>
 

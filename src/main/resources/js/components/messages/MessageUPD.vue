@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="frame826385-frame826385" v-if="!(profile.id == message.author.id)">
+  <div class="frame826385-frame826385" v-if="profile.id == message.author.id">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
           <span class="frame826385-text1">{{message.text}}</span>
@@ -12,7 +12,7 @@
         </span>
     </div>
   </div>
-  <div class="frame826385-frame826385 ml-auto" v-if="profile.id == message.author.id">
+  <div class="frame826385-frame826385 ml-auto" v-if="!(profile.id == message.author.id)">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
           <span class="frame826385-text1">{{message.text}}</span>
@@ -48,7 +48,18 @@ export default {
     del() {
       this.removeMessageAction(this.message)
     },
+    scrollToElement() {
+      const el = document.getElementById('end')
+
+      if (el) {
+        // Use el.scrollIntoView() to instantly scroll to the element
+        el.scrollIntoView({behavior: "smooth"});
+      }
+    }
   },
+  mounted() {
+    this.scrollToElement();
+  }
 }
 </script>
 

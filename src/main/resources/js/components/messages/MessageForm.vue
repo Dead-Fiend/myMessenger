@@ -93,7 +93,7 @@ export default {
         this.$refs.form.resetValidation()
       }
     },
-  }
+  },
 }
 </script>
 

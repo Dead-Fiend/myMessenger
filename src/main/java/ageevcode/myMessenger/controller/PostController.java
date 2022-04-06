@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/post")
 public class PostController {
-    public static final int POSTS_PER_PAGE = 3;
+    public static final int POSTS_PER_PAGE = 5;
 
     private final PostService postService;
 
