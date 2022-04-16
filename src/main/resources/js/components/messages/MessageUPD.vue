@@ -12,7 +12,7 @@
         </span>
     </div>
   </v-card>
-  <div class="frame826385-frame826385 ml-auto" v-if="!(profile.id == message.author.id)">
+  <v-card rounded="lg" class="frame826385-frame826385 ml-auto" v-if="!(profile.id == message.author.id)">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
           <span class="frame826385-text1">{{message.text}}</span>
@@ -23,7 +23,7 @@
           <span class="frame826385-text3">{{ message.createdAt.slice(11, 16) }}</span>
         </span>
     </div>
-  </div>
+  </v-card>
   </div>
 </template>
 
