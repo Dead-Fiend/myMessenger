@@ -1,6 +1,6 @@
 <template>
   <div class="my-2">
-    <div class="postwithoutpic232-postwithoutpic232">
+    <v-card class="postwithoutpic232-postwithoutpic232">
             <v-form ref="form" @submit.prevent="validate" style="width: 378px">
               <v-layout row class="px-3" style="margin-bottom: 2px">
                 <v-textarea
@@ -28,7 +28,7 @@
                 <v-btn class="ma-2" type="submit" style="color: darkslategray" icon><v-icon>send</v-icon></v-btn>
               </v-layout>
             </v-form>
-    </div>
+    </v-card>
   </div>
 </template>
 
@@ -99,7 +99,7 @@ export default {
   border-color: transparent;
   border-radius: 10px;
   flex-direction: column;
-  background-color: rgba(22, 24, 27, 1);
+  /*background-color: rgba(22, 24, 27, 1);*/
 }
 .postwithoutpic232-header234 {
   margin: 0 0 20px 0;
@@ -144,12 +144,12 @@ export default {
   align-items: flex-start;
   flex-shrink: 1;
   border-color: transparent;
-  background-color: rgba(0, 0, 0, 1);
+  /*background-color: rgba(0, 0, 0, 1);*/
 }
 .postwithoutpic232-text {
   top: 18.000011444091797px;
   left: 13.999998092651367px;
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   height: auto;
   position: absolute;
   font-size: 9px;
@@ -163,7 +163,7 @@ export default {
   text-decoration: none;
 }
 .postwithoutpic232-text1 {
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   height: auto;
   align-self: auto;
   font-style: normal;
@@ -214,7 +214,7 @@ export default {
   text-decoration: none;
 }
 .postwithoutpic232-text3 {
-  color: rgba(156, 160, 172, 1);
+  /*color: rgba(156, 160, 172, 1);*/
   width: 67px;
   height: auto;
   align-self: auto;
@@ -246,7 +246,7 @@ export default {
   border-color: transparent;
 
 
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   align-self: auto;
   font-style: normal;
   text-align: left;
@@ -260,7 +260,7 @@ export default {
 .postwithoutpic232-text4 {
   top: 0px;
   left: 0px;
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   position: absolute;
   font-size: 18px;
   align-self: auto;
@@ -273,7 +273,7 @@ export default {
   text-decoration: none;
 }
 .postwithoutpic232-text5 {
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   align-self: auto;
   font-style: normal;
   text-align: left;
@@ -337,7 +337,7 @@ export default {
   position: absolute;
 }
 .postwithoutpic232-text6 {
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   width: 350px;
   height: auto;
   font-size: 14px;
@@ -351,7 +351,7 @@ export default {
   text-decoration: none;
 }
 .postwithoutpic232-text7 {
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   width: 350px;
   height: auto;
   align-self: auto;

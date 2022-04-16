@@ -20,7 +20,7 @@ const routes = [
     {path: '/auth', component: Auth},
     {path: '/reg', component: Registration},
     {path: '/user/:id?', component: Profile},
-    {path:  '/subscriptions/:id', component: Subscriptions},
+    {path: '/subscriptions/:id', component: Subscriptions},
     {path: '/admin', component: Admin},
     {path: '*', component: PostsList},
 ]

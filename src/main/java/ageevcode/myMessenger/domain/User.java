@@ -32,6 +32,7 @@ public class User implements UserDetails, Serializable {
     private String username;
     @JsonView(Views.WithoutPassword.class)
     private String email;
+    @JsonView(Views.Password.class)
     private String password;
     @JsonView(Views.WithoutPassword.class)
     private Boolean active;
@@ -58,6 +59,15 @@ public class User implements UserDetails, Serializable {
     @JsonView(Views.WithoutPassword.class)
     @OneToMany(mappedBy = "channel", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<UserSubscription> subscribers = new HashSet<>();
+
+    @JsonView(Views.Password.class)
+    public String getPassword() {
+        return password;
+    }
+    @JsonView(Views.Password.class)
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

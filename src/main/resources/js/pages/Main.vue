@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid fill-height>
+    <v-container fluid fill-height class="ma-0">
       <v-layout column>
         <v-flex></v-flex>
         <v-flex>

@@ -1,5 +1,5 @@
-<template>
-  <router-link :to="`/user/${user.id}`" class="px-3">
+<template class="ma-0 pa-0">
+  <router-link :to="`/user/${user.id}`" class="ma-0 pa-0">
     <v-avatar :size="`${size || 36}px`" >
       <v-icon>account_circle</v-icon>
     </v-avatar>

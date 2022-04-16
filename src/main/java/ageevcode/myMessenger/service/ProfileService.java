@@ -3,8 +3,10 @@ package ageevcode.myMessenger.service;
 import ageevcode.myMessenger.domain.Role;
 import ageevcode.myMessenger.domain.User;
 import ageevcode.myMessenger.domain.UserSubscription;
+import ageevcode.myMessenger.domain.Views;
 import ageevcode.myMessenger.repo.UserRepo;
 import ageevcode.myMessenger.repo.UserSubscriptionRepo;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -56,6 +58,27 @@ public class ProfileService implements UserDetailsService {
         return userRepo.findByUsername(username);
     }
 
+    @JsonView(Views.Password.class)
+    public boolean changePassword(String oldPassword, User user, HttpServletRequest request) throws ServletException {
+        User userFromDB = userRepo.findByIdAndActive(user.getId(), true);
+        
+        if ( passwordEncoder.matches(oldPassword, userFromDB.getPassword()) ) {
+            if (user.getPassword().length() >= 8) {
+                userFromDB.setPassword(passwordEncoder.encode(user.getPassword()));
+                userRepo.save(userFromDB);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+
+
+    }
+
+    @JsonView(Views.Password.class)
     public boolean addUser(User user, HttpServletRequest request) throws ServletException {
         User userFromDB = userRepo.findByUsername(user.getUsername());
 
@@ -66,8 +89,6 @@ public class ProfileService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
-
-
 
         String usrnm = user.getUsername();
         String passwd = user.getPassword();

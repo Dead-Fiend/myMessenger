@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height>
+  <v-container fill-height class="ma-0">
     <v-layout column justify-space-around>
       <v-flex></v-flex>
       <v-flex>

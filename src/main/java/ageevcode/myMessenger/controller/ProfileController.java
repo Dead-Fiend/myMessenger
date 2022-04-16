@@ -12,6 +12,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +44,14 @@ public class ProfileController {
         data.put("profile", user);
         model.addAttribute("frontendData", data);
         return user;
+    }
+
+    @PostMapping("{id}")
+    @JsonView(Views.WithoutPassword.class)
+    public String changePassword(String oldPassword, User user, HttpServletRequest request, Model model) throws ServletException {
+        boolean result = profileService.changePassword(oldPassword, user, request);
+
+        return "redirect:/profile";
     }
 
     @PostMapping("change-subscription/{channelId}")

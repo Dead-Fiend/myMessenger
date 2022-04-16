@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="frame826385-frame826385" v-if="profile.id == message.author.id">
+  <v-card rounded="lg" class="frame826385-frame826385" v-if="profile.id == message.author.id">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
           <span class="frame826385-text1">{{message.text}}</span>
@@ -11,7 +11,7 @@
           <span class="frame826385-text3">{{ message.createdAt.slice(11, 16) }}</span>
         </span>
     </div>
-  </div>
+  </v-card>
   <div class="frame826385-frame826385 ml-auto" v-if="!(profile.id == message.author.id)">
     <div class="frame826385-group821399">
         <span class="frame826385-text">
@@ -76,7 +76,7 @@ export default {
   border-color: transparent;
   border-radius: 10px;
   flex-direction: column;
-  background-color: rgba(39,39,39, 0.8);
+  /*background-color: rgba(39,39,39, 0.8);*/
 }
 .frame826385-group821399 {
   width: 19px;
@@ -92,7 +92,7 @@ export default {
 .frame826385-text {
   top: 0px;
   left: 0px;
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   height: auto;
   position: absolute;
   font-size: 16px;
@@ -106,7 +106,7 @@ export default {
   text-decoration: none;
 }
 .frame826385-text1 {
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   height: auto;
   align-self: auto;
   font-style: normal;
@@ -128,7 +128,7 @@ export default {
 .frame826385-text2 {
   top: 0px;
   left: 0px;
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   height: auto;
   position: absolute;
   font-size: 10px;
@@ -142,7 +142,7 @@ export default {
   text-decoration: none;
 }
 .frame826385-text3 {
-  color: rgba(255, 255, 255, 1);
+  /*color: rgba(255, 255, 255, 1);*/
   height: auto;
   align-self: auto;
   font-style: normal;

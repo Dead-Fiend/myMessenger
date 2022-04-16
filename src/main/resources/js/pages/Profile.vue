@@ -40,6 +40,59 @@
         </v-layout>
         <v-btn v-if="!isMyProfile" @click="changeSubscription">{{isImSubscribed ? 'Отписаться' : 'Подписаться'}}</v-btn>
       </v-flex>
+
+      <v-flex>
+        <v-content>Смена пароля</v-content>
+      </v-flex>
+      <v-flex>
+        <v-form
+            width="350px"
+            :action="`/profile/${profile.id}`"
+            method="post"
+            justify="center"
+            align="center"
+            ref="form">
+          <v-text-field
+              v-model="value_op"
+              :append-icon="show_op ? 'visibility' : 'visibility_off'"
+              :type="show_op ? 'text' : 'password'"
+              @click:append="show_op = !show_op"
+              :rules="[rules_p.required, rules_p.min]"
+              class="ma-1"
+              name="oldPassword"
+              label="Пароль"
+              @keyup.enter="validate"
+              required
+          >
+          </v-text-field>
+          <v-text-field
+              :append-icon="show_p ? 'visibility' : 'visibility_off'"
+              :type="show_p ? 'text' : 'password'"
+              @click:append="show_p = !show_p"
+              :rules="[rules_p.required, rules_p.min]"
+
+              v-model="value_p"
+              class="ma-1"
+              name="password"
+
+              label="Новый пароль"
+              @keyup.enter="validate"
+              required loading
+          >
+            <template v-slot:progress>
+              <v-progress-linear
+                  :value="progress_p"
+                  :color="color_p"
+                  absolute
+                  height="7"
+              ></v-progress-linear>
+            </template>
+          </v-text-field>
+          <v-btn @click="validate" depressed color="primary" class="mb-4">Сменить пароль</v-btn>
+        </v-form>
+
+
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -51,7 +104,17 @@ export default {
   name: "Profile",
   data() {
     return {
-      profile: {}
+      profile: {},
+
+      isValid: false,
+      value_p: '',
+      value_op: '',
+      show_op: false,
+      show_p: false,
+      rules_p: {
+        required: value => !!value || 'Обязательное поле',
+        min: v => v.length >= 8 || 'Минимум 8 символов',
+      },
     }
   } ,
   computed: {
@@ -62,6 +125,20 @@ export default {
       return this.profile.subscribers && this.profile.subscribers.find(subscription => {
         return subscription.subscriber === this.$store.state.profile.id
       })
+    },
+
+
+    progress_l () {
+      return Math.min(100, this.value_l.length * 33.3)
+    },
+    color_l () {
+      return ['error', 'error', 'success'][Math.floor(this.progress_l / 40)]
+    },
+    progress_p () {
+      return Math.min(100, this.value_p.length * 5)
+    },
+    color_p () {
+      return ['error', 'warning', 'success'][Math.floor(this.progress_p / 40)]
     },
   },
   watch: {
@@ -83,6 +160,14 @@ export default {
       this.$forceUpdate()
     },
 
+
+
+    validate () {
+      this.$refs.form.validate()
+      if (this.$refs.form.validate()) {
+        this.$refs.form.$el.submit()
+      }
+    },
   },
   beforeMount() {
     this.updateProfile()
@@ -91,5 +176,7 @@ export default {
 </script>
 
 <style scoped>
-
+.v-text-field .v-input__append-inner, .v-text-field .v-input__prepend-inner {
+  transform: scale(0.9);
+}
 </style>
