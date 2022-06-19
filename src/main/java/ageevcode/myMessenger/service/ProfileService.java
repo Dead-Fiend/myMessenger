@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 public class ProfileService implements UserDetailsService {
     private final UserRepo userRepo;
     private final UserSubscriptionRepo userSubscriptionRepo;
-
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -34,7 +32,6 @@ public class ProfileService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     public User changeSubscription(User channel, User subscriber) {
         List<UserSubscription> subscriptions = channel.getSubscribers()
                 .stream()
@@ -42,14 +39,12 @@ public class ProfileService implements UserDetailsService {
                         subscription.getSubscriber().equals(subscriber)
                 )
                 .collect(Collectors.toList());
-
         if (subscriptions.isEmpty()) {
             UserSubscription subscription = new UserSubscription(channel, subscriber);
             channel.getSubscribers().add(subscription);
         } else {
             channel.getSubscribers().removeAll(subscriptions);
         }
-
         return userRepo.save(channel);
     }
 
@@ -73,9 +68,6 @@ public class ProfileService implements UserDetailsService {
         } else {
             return false;
         }
-
-
-
     }
 
     @JsonView(Views.Password.class)

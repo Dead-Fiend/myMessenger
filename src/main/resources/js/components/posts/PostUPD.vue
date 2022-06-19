@@ -2,7 +2,8 @@
   <div class="my-2">
       <v-card rounded="lg" class="postwithoutpic-postwithoutpic232">
         <div class="postwithoutpic-header234" v-if="!isDefault">
-          <div class="postwithoutpic-header235">
+          <router-link :to="`/user/${user.id}`">
+          <div class="postwithoutpic-header235" >
             <div class="postwithoutpic-group236">
               <div class="postwithoutpic-avatar237" style="display:flex;justify-content:center;align-items:center;">
                 <div style="display:flex;justify-content:center;align-items:center;">
@@ -58,6 +59,7 @@
               </v-list>
             </v-menu>
           </div>
+          </router-link>
         </div>
         <span class="postwithoutpic-text6" v-if="isDefault" style="text-align: center">
           <span class="postwithoutpic-text7">

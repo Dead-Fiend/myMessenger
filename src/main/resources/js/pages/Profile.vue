@@ -90,8 +90,6 @@
           </v-text-field>
           <v-btn @click="validate" depressed color="primary" class="mb-4">Сменить пароль</v-btn>
         </v-form>
-
-
       </v-flex>
     </v-layout>
   </v-container>
