@@ -2,8 +2,9 @@
   <div class="my-2">
       <v-card rounded="lg" class="postwithoutpic-postwithoutpic232">
         <div class="postwithoutpic-header234" v-if="!isDefault">
-          <router-link :to="`/user/${post.author.id}`">
+
           <div class="postwithoutpic-header235" >
+            <router-link :to="`/user/${post.author.id}`">
             <div class="postwithoutpic-group236">
               <div class="postwithoutpic-avatar237" style="display:flex;justify-content:center;align-items:center;">
                 <div style="display:flex;justify-content:center;align-items:center;">
@@ -35,6 +36,7 @@
                 </div>
               </div>
             </div>
+            </router-link>
             <v-menu rounded="pill" class="rounded-pill" top offset-x offset- v-if="!isDefault">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -59,7 +61,7 @@
               </v-list>
             </v-menu>
           </div>
-          </router-link>
+
         </div>
         <span class="postwithoutpic-text6" v-if="isDefault" style="text-align: center">
           <span class="postwithoutpic-text7">
